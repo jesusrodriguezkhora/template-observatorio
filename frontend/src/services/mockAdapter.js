@@ -1,7 +1,7 @@
 import { MOCK_DB } from "../mocks/data";
 import { NotFoundError } from "./errors";
 
-const MOCK_DELAY_MS = 300;
+const MOCK_DELAY_MS = 50;
 
 function respond(value) {
   return new Promise((resolve) => {
