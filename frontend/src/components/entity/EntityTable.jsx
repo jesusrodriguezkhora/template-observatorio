@@ -12,7 +12,7 @@ import { Link as RouterLink, useNavigate } from "react-router";
 import { getDetailPath } from "../../entities/registry";
 
 const headerRowSx = (theme) => ({
-  bgcolor: `rgba(${theme.vars.palette.primary.mainChannel} / 0.06)`,
+  bgcolor: `rgba(${theme.vars.palette.primary.mainChannel} / 0.3)`,
 });
 
 function renderCell(entity, column, row, lookups) {
@@ -25,7 +25,7 @@ function renderCell(entity, column, row, lookups) {
   if (column.ref) {
     const label = lookups[column.ref]?.[String(value)] ?? value;
     return (
-      <Link component={RouterLink} to={getDetailPath(column.ref, value)} underline="hover">
+      <Link component={RouterLink} to={getDetailPath(column.ref, value)} color="inherit" underline="hover">
         {label}
       </Link>
     );
@@ -59,12 +59,12 @@ function EntityTable({ entity, rows, lookups }) {
   }
 
   return (
-    <TableContainer component={Paper} variant="outlined">
+    <TableContainer component={Paper} variant="outlined" sx={{ borderRadius: 3 }}>
       <Table size="small" aria-label={`Listado de ${entity.labels.plural.toLowerCase()}`}>
         <TableHead>
           <TableRow sx={headerRowSx}>
             {columns.map((column) => (
-              <TableCell key={column.field} sx={{ fontWeight: 600 }}>
+              <TableCell key={column.field} sx={{ fontWeight: 600, py: 2}}>
                 {column.label}
               </TableCell>
             ))}
