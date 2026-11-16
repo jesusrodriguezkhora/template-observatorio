@@ -1,22 +1,28 @@
 import { listResource } from "../services/dataService";
+import { COLUMN_TYPES } from "../columns";
 import { getEntity } from "./registry";
+
+function getLookupKeys(columns) {
+  const keys = columns
+    .map((column) => COLUMN_TYPES[column.type].lookupEntity?.(column))
+    .filter(Boolean);
+  return [...new Set(keys)];
+}
 
 export async function loadBrowserData(entityKey) {
   const entity = getEntity(entityKey);
-  const refKeys = [
-    ...new Set(entity.browser.columns.filter((column) => column.ref).map((column) => column.ref)),
-  ];
+  const lookupKeys = getLookupKeys(entity.columns);
 
-  const [rows, ...refResults] = await Promise.all([
+  const [rows, ...lookupResults] = await Promise.all([
     listResource(entity.key),
-    ...refKeys.map((refKey) => listResource(refKey)),
+    ...lookupKeys.map((lookupKey) => listResource(lookupKey)),
   ]);
 
   const lookups = {};
-  refKeys.forEach((refKey, index) => {
-    const { displayField } = getEntity(refKey);
-    lookups[refKey] = Object.fromEntries(
-      refResults[index].map((refRow) => [String(refRow.id), refRow[displayField]]),
+  lookupKeys.forEach((lookupKey, index) => {
+    const { displayField } = getEntity(lookupKey);
+    lookups[lookupKey] = Object.fromEntries(
+      lookupResults[index].map((lookupRow) => [String(lookupRow.id), lookupRow[displayField]]),
     );
   });
 

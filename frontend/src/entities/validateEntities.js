@@ -1,3 +1,6 @@
+import { COLUMN_TYPES } from "../columns";
+
+
 export function validateEntities(definitions) {
   const errors = [];
   const byKey = new Map();
@@ -32,6 +35,8 @@ export function validateEntities(definitions) {
       current = byKey.get(parentKey);
     }
 
+    errors.push(...validateColumns(entity, where, byKey));
+
     const tabKeys = new Set();
     for (const tab of entity.detail?.tabs ?? []) {
       if (tabKeys.has(tab.key)) {
@@ -49,6 +54,47 @@ export function validateEntities(definitions) {
           );
         }
       }
+    }
+  }
+
+  return errors;
+}
+
+function validateColumns(entity, where, byKey) {
+  const errors = [];
+
+  if (!Array.isArray(entity.columns) || entity.columns.length === 0) {
+    errors.push(`${where}: no tiene columnas`);
+    return errors;
+  }
+
+  const seenFields = new Set();
+  for (const column of entity.columns) {
+    const columnWhere = `${where}, columna "${column.field}"`;
+
+    if (!column.field || !column.label) {
+      errors.push(`${where}: hay una columna sin field o sin label`);
+    }
+    if (seenFields.has(column.field)) {
+      errors.push(`${columnWhere}: está repetida`);
+    }
+    seenFields.add(column.field);
+
+    const columnType = COLUMN_TYPES[column.type];
+    if (!columnType) {
+      errors.push(`${columnWhere}: el tipo "${column.type}" no existe`);
+      continue;
+    }
+
+    for (const option of columnType.requires ?? []) {
+      if (column[option] === undefined) {
+        errors.push(`${columnWhere}: el tipo "${column.type}" necesita la opción "${option}"`);
+      }
+    }
+
+    const lookupKey = columnType.lookupEntity?.(column);
+    if (lookupKey && !byKey.has(lookupKey)) {
+      errors.push(`${columnWhere}: la entidad "${lookupKey}" no existe`);
     }
   }
 
