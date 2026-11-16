@@ -5,7 +5,7 @@ import { useAuth } from "../auth/AuthContext";
 import SidebarBrand from "./SidebarBrand";
 import SidebarUser from "./SidebarUser";
 
-const SIDEBAR_WIDTH = 220;
+const SIDEBAR_WIDTH = 250;
 
 const navItemSx = (theme) => ({
   borderRadius: 1,
