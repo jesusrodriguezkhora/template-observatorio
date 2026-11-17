@@ -4,8 +4,10 @@ import { HOME_PATH } from "./config/navigation";
 import { getAllEntities } from "./entities/registry";
 import AppLayout from "./layout/AppLayout";
 import EntityBrowser from "./components/entity/EntityBrowser";
+import EntityDetail from "./components/entity/EntityDetail";
 
-const browsableEntities = getAllEntities().filter((entity) => entity.browser);
+const allEntities = getAllEntities();
+const browsableEntities = allEntities.filter((entity) => entity.browser);
 
 function App() {
   return (
@@ -19,6 +21,13 @@ function App() {
               key={entity.key}
               path={entity.key}
               element={<EntityBrowser key={entity.key} entityKey={entity.key} />}
+            />
+          ))}
+          {allEntities.map((entity) => (
+            <Route
+              key={`${entity.key}-detail`}
+              path={`${entity.key}/:id`}
+              element={<EntityDetail key={entity.key} entityKey={entity.key} />}
             />
           ))}
           <Route path="*" element={<h1>Página no encontrada</h1>} />

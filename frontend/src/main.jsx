@@ -6,7 +6,13 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { appTheme } from "./theme/appTheme";
 import { THEME_CONFIG } from "./config/theme";
 import AuthProvider from "./auth/AuthProvider";
+import { ENTITY_DEFINITIONS } from "./config/entities";
+import { assertValidEntities } from "./entities/validateEntities";
 import App from "./App.jsx";
+
+if (import.meta.env.DEV) {
+  assertValidEntities(ENTITY_DEFINITIONS);
+}
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
