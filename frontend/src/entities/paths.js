@@ -6,8 +6,8 @@ export function getDetailPath(key, id) {
   return `/${key}/${id}`;
 }
 
-export function getFallbackPath(entity, record) {
-  if (entity.parent && record) {
+export function getParentPath(entity, record) {
+  if (entity.parent) {
     return getDetailPath(entity.parent.entity, record[entity.parent.field]);
   }
   if (entity.browser) {

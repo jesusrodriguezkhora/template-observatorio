@@ -1,8 +1,8 @@
 import { IconButton, Tooltip } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { useLocation, useNavigate, useParams } from "react-router";
+import { Link as RouterLink, useParams } from "react-router";
 import { getEntity } from "../../entities/registry";
-import { getFallbackPath } from "../../entities/paths";
+import { getParentPath } from "../../entities/paths";
 import { loadDetailData } from "../../entities/queries";
 import { useAsyncData } from "../../hooks/useAsyncData";
 import { getTabValueDefs } from "../../tabs";
@@ -11,23 +11,21 @@ import AsyncState from "../AsyncState";
 import EntityTabs from "./EntityTabs";
 import EntityPipeline from "./EntityPipeline";
 
+function getBackLabel(entity) {
+  if (entity.parent) {
+    return `Volver a ${getEntity(entity.parent.entity).labels.singular.toLowerCase()}`;
+  }
+  return `Volver a ${entity.labels.plural.toLowerCase()}`;
+}
+
 function EntityDetail({ entityKey }) {
   const entity = getEntity(entityKey);
   const { id } = useParams();
-  const location = useLocation();
-  const navigate = useNavigate();
+  const backLabel = getBackLabel(entity);
 
   const { data, loading, error } = useAsyncData(`detail/${entityKey}/${id}`, () =>
     loadDetailData(entityKey, id, getTabValueDefs(entity.detail.tabs)),
   );
-
-  function handleBack() {
-    if (location.key !== "default") {
-      navigate(-1);
-    } else {
-      navigate(getFallbackPath(entity, data?.record));
-    }
-  }
 
   return (
     <AsyncState
@@ -42,8 +40,13 @@ function EntityDetail({ entityKey }) {
             uppercase={false}
             title={data.record[entity.displayField]}
             leading={
-              <Tooltip title="Volver">
-                <IconButton onClick={handleBack} aria-label="Volver" edge="start">
+              <Tooltip title={backLabel}>
+                <IconButton
+                  component={RouterLink}
+                  to={getParentPath(entity, data.record)}
+                  aria-label={backLabel}
+                  edge="start"
+                >
                   <ArrowBackIcon />
                 </IconButton>
               </Tooltip>
