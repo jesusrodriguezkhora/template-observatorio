@@ -1,5 +1,8 @@
 import FieldsTab from "./FieldsTab";
 import RelatedTab from "./RelatedTab";
+import GridTab from "./GridTab";
+import { getFragmentValueDefs } from "../fragments";
+import { getGridWidgets } from "../widgets/visibility";
 
 export const TAB_TYPES = Object.freeze({
   fields: {
@@ -12,6 +15,14 @@ export const TAB_TYPES = Object.freeze({
     requires: ["entity"],
     relatedEntity: (tab) => tab.entity,
   },
+  grid: {
+    Panel: GridTab,
+    requires: ["grids"],
+    valueDefs: (tab, entity) =>
+      getFragmentValueDefs(
+        getGridWidgets(tab.grids, entity.widgets).flatMap((widget) => widget.fragments),
+      ),
+  },
 });
 
 export function getTabType(type) {
@@ -22,6 +33,6 @@ export function getTabType(type) {
   return tabType;
 }
 
-export function getTabValueDefs(tabs) {
-  return tabs.flatMap((tab) => getTabType(tab.type).valueDefs?.(tab) ?? []);
+export function getTabValueDefs(entity) {
+  return entity.detail.tabs.flatMap((tab) => getTabType(tab.type).valueDefs?.(tab, entity) ?? []);
 }
