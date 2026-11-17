@@ -1,9 +1,10 @@
 import { getColumnType } from "./index";
+import { isEmptyValue } from "./helpers";
 
 function ColumnValue({ def, row, entity, lookups }) {
   const value = row[def.field];
 
-  if (value === null || value === undefined || value === "") {
+  if (isEmptyValue(value)) {
     return "—";
   }
 
