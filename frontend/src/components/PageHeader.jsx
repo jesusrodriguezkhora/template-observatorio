@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 
-function PageHeader({ title, actions = null }) {
+function PageHeader({ title, leading = null, actions = null, uppercase = true }) {
   return (
     <Box
       sx={{
@@ -14,9 +14,16 @@ function PageHeader({ title, actions = null }) {
         borderColor: "divider",
       }}
     >
-      <Typography variant="h5" component="h1" sx={{ textTransform: "uppercase", fontWeight: 500 }}>
-        {title}
-      </Typography>
+      <Box sx={{ display: "flex", alignItems: "center", gap: 1, minWidth: 0 }}>
+        {leading}
+        <Typography
+          variant="h5"
+          component="h1"
+          sx={{ textTransform: uppercase ? "uppercase" : "none", fontWeight: 500 }}
+        >
+          {title}
+        </Typography>
+      </Box>
       {actions}
     </Box>
   );
