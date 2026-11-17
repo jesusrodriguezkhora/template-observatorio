@@ -2,9 +2,10 @@ import { Link } from "@mui/material";
 import { Link as RouterLink } from "react-router";
 import { TABLE_CONFIG } from "../config/tables";
 import { getDetailPath } from "../entities/paths";
+import { getRefLabel } from "./helpers";
 
 function RefCell({ value, column, lookups }) {
-  const label = lookups[column.entity]?.[String(value)] ?? value;
+  const label = getRefLabel(value, column, lookups);
 
   return (
     <Link
