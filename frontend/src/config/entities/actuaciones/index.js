@@ -7,6 +7,6 @@ export const actuaciones = {
   displayField: "nombre",
   parent: { entity: "proyectos", field: "proyecto_id" },
   columns,
-  browser: { searchFields: ["nombre"] },
+  browser: {},
   detail: { tabs },
 };

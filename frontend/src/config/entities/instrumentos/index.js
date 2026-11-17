@@ -7,6 +7,6 @@ export const instrumentos = {
   displayField: "nombre",
   parent: { entity: "actuaciones", field: "actuacion_id" },
   columns,
-  browser: null,
+  browser: {},
   detail: { tabs },
 };

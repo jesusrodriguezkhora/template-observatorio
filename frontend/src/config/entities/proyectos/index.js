@@ -7,6 +7,6 @@ export const proyectos = {
   displayField: "nombre",
   parent: null,
   columns,
-  browser: { searchFields: ["nombre"] },
+  browser: {},
   detail: { tabs },
 };
