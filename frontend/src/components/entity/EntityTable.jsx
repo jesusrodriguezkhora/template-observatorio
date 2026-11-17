@@ -4,15 +4,18 @@ import { useAuth } from "../../auth/AuthContext";
 import { getColumnType } from "../../columns";
 import { TABLE_CONFIG } from "../../config/tables";
 import { getDetailPath } from "../../entities/paths";
+import ColumnValue from "../../columns/ColumnValue";
 
 const headerRowSx = (theme) => ({
   bgcolor: `rgba(${theme.vars.palette.primary.mainChannel} / 0.06)`,
 });
 
-function EntityTable({ entity, rows, lookups }) {
+function EntityTable({ entity, rows, lookups, hiddenFields = [] }) {
   const navigate = useNavigate();
   const { canAccess } = useAuth();
-  const columns = entity.columns.filter((column) => canAccess(column.roles));
+  const columns = entity.columns.filter(
+    (column) => canAccess(column.roles) && !hiddenFields.includes(column.field),
+  );
 
   function handleRowClick(event, row) {
     if (event.target.closest("a")) {
@@ -52,27 +55,11 @@ function EntityTable({ entity, rows, lookups }) {
               onClick={(event) => handleRowClick(event, row)}
               sx={{ cursor: "pointer" }}
             >
-              {columns.map((column) => {
-                const { Cell } = getColumnType(column.type);
-                const value = row[column.field];
-                const isEmpty = value === null || value === undefined;
-
-                return (
-                  <TableCell key={column.field} align={column.align}>
-                    {isEmpty ? (
-                      "—"
-                    ) : (
-                      <Cell
-                        value={value}
-                        row={row}
-                        column={column}
-                        entity={entity}
-                        lookups={lookups}
-                      />
-                    )}
-                  </TableCell>
-                );
-              })}
+              {columns.map((column) => (
+                <TableCell key={column.field} align={column.align}>
+                  <ColumnValue def={column} row={row} entity={entity} lookups={lookups} />
+                </TableCell>
+              ))}
             </TableRow>
           ))}
         </TableBody>
