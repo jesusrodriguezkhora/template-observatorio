@@ -1,6 +1,7 @@
 import { getResource, listResource } from "../services/dataService";
 import { getColumnType } from "../columns";
-import { getEntity, getRelationPath } from "./registry";
+import { NotFoundError } from "../services/errors";
+import { getAncestors, getEntity, getRelationPath } from "./registry";
 
 function getLookupKeys(defs) {
   const keys = defs
@@ -32,12 +33,38 @@ export async function loadBrowserData(entityKey) {
   return { rows, lookups };
 }
 
+export async function loadTrail(entityKey, record) {
+  const trail = [{ entity: getEntity(entityKey), record }];
+  const ancestors = getAncestors(entityKey).reverse();
+
+  for (const ancestor of ancestors) {
+    const child = trail[0];
+    const parentId = child.record[child.entity.parent.field];
+    if (parentId === null || parentId === undefined) {
+      break;
+    }
+
+    try {
+      const parentRecord = await getResource(ancestor.key, parentId);
+      trail.unshift({ entity: ancestor, record: parentRecord });
+    } catch (error) {
+      if (error instanceof NotFoundError) {
+        break;
+      }
+      throw error;
+    }
+  }
+
+  return trail;
+}
+
 export async function loadDetailData(entityKey, id, valueDefs) {
   const [record, lookups] = await Promise.all([
     getResource(entityKey, id),
     loadLookups(valueDefs),
   ]);
-  return { record, lookups };
+  const trail = await loadTrail(entityKey, record);
+  return { record, lookups, trail };
 }
 
 async function loadRelatedRows(fromKey, id, toKey) {
