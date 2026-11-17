@@ -24,7 +24,7 @@ export function validateEntities(definitions) {
     if (!Array.isArray(entity.columns) || entity.columns.length === 0) {
       errors.push(`${where}: no tiene columnas`);
     } else {
-      errors.push(...validateValueDefs(entity.columns, `${where}, columna`, byKey));
+      errors.push(...validateValueDefs(entity.columns, `${where}, columna`, byKey, true));
     }
 
     errors.push(...validateTabs(entity, where, byKey));
@@ -62,7 +62,7 @@ function validateParent(entity, where, byKey) {
   return errors;
 }
 
-function validateValueDefs(defs, where, byKey) {
+function validateValueDefs(defs, where, byKey, checkDuplicates) {
   const errors = [];
   const seenFields = new Set();
 
@@ -72,7 +72,7 @@ function validateValueDefs(defs, where, byKey) {
     if (!def.field || !def.label) {
       errors.push(`${where} sin field o sin label`);
     }
-    if (seenFields.has(def.field)) {
+    if (checkDuplicates && seenFields.has(def.field)) {
       errors.push(`${defWhere}: está repetida`);
     }
     seenFields.add(def.field);
@@ -121,9 +121,9 @@ function validateTabs(entity, where, byKey) {
 
     errors.push(...missingOptions(tab, tabType, `${tabWhere}: el tipo "${tab.type}"`));
 
-    const valueDefs = tabType.valueDefs?.(tab);
+    const valueDefs = tabType.valueDefs?.(tab, entity);
     if (Array.isArray(valueDefs)) {
-      errors.push(...validateValueDefs(valueDefs, `${tabWhere}, campo`, byKey));
+      errors.push(...validateValueDefs(valueDefs, `${tabWhere}, campo`, byKey, false));
     }
 
     const relatedKey = tabType.relatedEntity?.(tab);

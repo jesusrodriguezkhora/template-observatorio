@@ -24,7 +24,7 @@ function EntityDetail({ entityKey }) {
   const backLabel = getBackLabel(entity);
 
   const { data, loading, error } = useAsyncData(`detail/${entityKey}/${id}`, () =>
-    loadDetailData(entityKey, id, getTabValueDefs(entity.detail.tabs)),
+    loadDetailData(entityKey, id, getTabValueDefs(entity)),
   );
 
   return (
