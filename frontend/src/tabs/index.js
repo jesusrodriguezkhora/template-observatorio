@@ -18,6 +18,7 @@ export const TAB_TYPES = Object.freeze({
   grid: {
     Panel: GridTab,
     requires: ["grids"],
+    widgetGrids: (tab) => tab.grids,
     valueDefs: (tab, entity) =>
       getFragmentValueDefs(
         getGridWidgets(tab.grids, entity.widgets).flatMap((widget) => widget.fragments),

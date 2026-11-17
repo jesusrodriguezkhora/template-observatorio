@@ -1,5 +1,6 @@
-import { COLUMN_TYPES, DEFAULT_COLUMN_TYPE } from "../columns";
 import { TAB_TYPES } from "../tabs";
+import { validateGrids, validateWidgetCatalog } from "../widgets/validateWidgets";
+import { missingOptions, validateValueDefs } from "./validationHelpers";
 
 export function validateEntities(definitions) {
   const errors = [];
@@ -27,6 +28,7 @@ export function validateEntities(definitions) {
       errors.push(...validateValueDefs(entity.columns, `${where}, columna`, byKey, true));
     }
 
+    errors.push(...validateWidgetCatalog(entity.widgets, where, byKey));
     errors.push(...validateTabs(entity, where, byKey));
   }
 
@@ -62,38 +64,6 @@ function validateParent(entity, where, byKey) {
   return errors;
 }
 
-function validateValueDefs(defs, where, byKey, checkDuplicates) {
-  const errors = [];
-  const seenFields = new Set();
-
-  for (const def of defs) {
-    const defWhere = `${where} "${def.field}"`;
-
-    if (!def.field || !def.label) {
-      errors.push(`${where} sin field o sin label`);
-    }
-    if (checkDuplicates && seenFields.has(def.field)) {
-      errors.push(`${defWhere}: está repetida`);
-    }
-    seenFields.add(def.field);
-
-    const typeName = def.type ?? DEFAULT_COLUMN_TYPE;
-    const columnType = COLUMN_TYPES[typeName];
-    if (!columnType) {
-      errors.push(`${defWhere}: el tipo "${typeName}" no existe`);
-      continue;
-    }
-
-    errors.push(...missingOptions(def, columnType, `${defWhere}: el tipo "${typeName}"`));
-
-    const lookupKey = columnType.lookupEntity?.(def);
-    if (lookupKey && !byKey.has(lookupKey)) {
-      errors.push(`${defWhere}: la entidad "${lookupKey}" no existe`);
-    }
-  }
-
-  return errors;
-}
 
 function validateTabs(entity, where, byKey) {
   const errors = [];
@@ -121,9 +91,13 @@ function validateTabs(entity, where, byKey) {
 
     errors.push(...missingOptions(tab, tabType, `${tabWhere}: el tipo "${tab.type}"`));
 
-    const valueDefs = tabType.valueDefs?.(tab, entity);
-    if (Array.isArray(valueDefs)) {
-      errors.push(...validateValueDefs(valueDefs, `${tabWhere}, campo`, byKey, false));
+    if (tabType.widgetGrids) {
+      errors.push(...validateGrids(tabType.widgetGrids(tab), entity.widgets, tabWhere));
+    } else if (tabType.valueDefs) {
+      const valueDefs = tabType.valueDefs(tab, entity);
+      if (Array.isArray(valueDefs)) {
+        errors.push(...validateValueDefs(valueDefs, `${tabWhere}, campo`, byKey, false));
+      }
     }
 
     const relatedKey = tabType.relatedEntity?.(tab);
@@ -140,11 +114,6 @@ function validateTabs(entity, where, byKey) {
   return errors;
 }
 
-function missingOptions(def, type, prefix) {
-  return (type.requires ?? [])
-    .filter((option) => def[option] === undefined)
-    .map((option) => `${prefix} necesita la opción "${option}"`);
-}
 
 function descendsFrom(entity, ancestorKey, byKey) {
   const visited = new Set();
