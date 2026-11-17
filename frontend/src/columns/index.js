@@ -2,6 +2,8 @@ import TextCell from "./TextCell";
 import LinkCell from "./LinkCell";
 import RefCell from "./RefCell";
 
+export const DEFAULT_COLUMN_TYPE = "text";
+
 export const COLUMN_TYPES = Object.freeze({
   text: { Cell: TextCell },
   link: { Cell: LinkCell },
@@ -12,7 +14,7 @@ export const COLUMN_TYPES = Object.freeze({
   },
 });
 
-export function getColumnType(type) {
+export function getColumnType(type = DEFAULT_COLUMN_TYPE) {
   const columnType = COLUMN_TYPES[type];
   if (!columnType) {
     throw new Error(`Tipo de columna desconocido: "${type}"`);
