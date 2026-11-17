@@ -17,3 +17,15 @@ export function getVisibleFragments(widget, record, canAccess) {
       return true;
     });
 }
+
+export function isWidgetVisible(widget, record, canAccess) {
+  return getVisibleFragments(widget, record, canAccess).length > 0;
+}
+
+export function getWidget(catalog, key) {
+  const widget = catalog[key];
+  if (!widget) {
+    throw new Error(`Widget desconocido: "${key}"`);
+  }
+  return widget;
+}
