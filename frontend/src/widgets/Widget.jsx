@@ -5,7 +5,7 @@ import { WIDGET_CONFIG } from "../config/widgets";
 import { getFragmentType } from "../fragments";
 import { getVisibleFragments } from "./visibility";
 
-function Widget({ widget, entity, record, lookups }) {
+function Widget({ widget, entity, record, lookups, grow = false }) {
   const { canAccess } = useAuth();
   const titleId = useId();
   const visibleFragments = getVisibleFragments(widget, record, canAccess);
@@ -19,7 +19,7 @@ function Widget({ widget, entity, record, lookups }) {
       component="section"
       variant="outlined"
       aria-labelledby={titleId}
-      sx={{ borderRadius: WIDGET_CONFIG.borderRadius, p: WIDGET_CONFIG.padding }}
+      sx={{ borderRadius: WIDGET_CONFIG.borderRadius, p: WIDGET_CONFIG.padding, flexGrow: grow ? 1 : 0 }}
     >
       <Typography
         id={titleId}
