@@ -29,3 +29,8 @@ export function getWidget(catalog, key) {
   }
   return widget;
 }
+
+export function getGridWidgets(grids, catalog) {
+  const keys = new Set(grids.flatMap((grid) => grid.columns.flatMap((column) => column.widgets)));
+  return [...keys].map((key) => getWidget(catalog, key));
+}

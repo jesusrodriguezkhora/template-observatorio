@@ -5,6 +5,7 @@ export const WIDGET_CONFIG = Object.freeze({
   fragmentGap: 2,
   subtitleColor: "primary.main",
   grid: {
+    gridGap: 3,
     columnGap: 3,
     widgetGap: 3,
     stackBelow: "md",
