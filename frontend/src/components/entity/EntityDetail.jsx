@@ -9,6 +9,7 @@ import { getTabValueDefs } from "../../tabs";
 import PageHeader from "../PageHeader";
 import AsyncState from "../AsyncState";
 import EntityTabs from "./EntityTabs";
+import EntityPipeline from "./EntityPipeline";
 
 function EntityDetail({ entityKey }) {
   const entity = getEntity(entityKey);
@@ -36,6 +37,7 @@ function EntityDetail({ entityKey }) {
     >
       {() => (
         <>
+          <EntityPipeline trail={data.trail} />
           <PageHeader
             uppercase={false}
             title={data.record[entity.displayField]}
