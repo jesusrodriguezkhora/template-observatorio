@@ -1,5 +1,5 @@
 export const columns = [
-  { field: "id", label: "ID"},
-  { field: "nombre", label: "Nombre del instrumento", type: "link" },
-  { field: "actuacion_id", label: "Actuación", type: "ref", entity: "actuaciones" },
+  { field: "id", label: "ID", searchable: true },
+  { field: "nombre", label: "Nombre del instrumento", type: "link", searchable: true },
+  { field: "actuacion_id", label: "Actuación", type: "ref", entity: "actuaciones", searchable: true },
 ];
