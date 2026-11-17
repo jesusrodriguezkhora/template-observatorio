@@ -1,5 +1,5 @@
 export const DETAIL_CONFIG = Object.freeze({
-  hideSingleTab: true,
+  hideSingleTab: false,
   fieldMinWidth: 260,
   pipeline: {
     showOnRoot: false,

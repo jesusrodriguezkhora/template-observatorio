@@ -19,7 +19,7 @@ function PageHeader({ title, leading = null, actions = null, uppercase = true })
         <Typography
           variant="h5"
           component="h1"
-          sx={{ textTransform: uppercase ? "uppercase" : "none", fontWeight: 500 }}
+          sx={{ fontWeight: 500 }}
         >
           {title}
         </Typography>
