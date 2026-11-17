@@ -1,6 +1,8 @@
 import { InputAdornment, TextField, Typography } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { useSearchParams } from "react-router";
+import { useAuth } from "../../auth/AuthContext";
+import { getColumnText } from "../../columns";
 import { getEntity } from "../../entities/registry";
 import { loadBrowserData } from "../../entities/queries";
 import { useAsyncData } from "../../hooks/useAsyncData";
@@ -12,9 +14,15 @@ import EntityTable from "./EntityTable";
 function EntityBrowser({ entityKey }) {
   const entity = getEntity(entityKey);
   const plural = entity.labels.plural.toLowerCase();
+  const { canAccess } = useAuth();
+
+  const searchColumns = entity.columns.filter(
+    (column) => column.searchable && canAccess(column.roles),
+  );
+  const hasSearch = searchColumns.length > 0;
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const query = searchParams.get("q") ?? "";
+  const query = hasSearch ? (searchParams.get("q") ?? "") : "";
 
   const { data, loading, error } = useAsyncData(`browser/${entityKey}`, () =>
     loadBrowserData(entityKey),
@@ -29,24 +37,26 @@ function EntityBrowser({ entityKey }) {
     <>
       <PageHeader title={entity.labels.plural} />
 
-      <TextField
-        fullWidth
-        size="small"
-        placeholder="Buscar"
-        value={query}
-        onChange={handleSearchChange}
-        sx={{ mb: 3 }}
-        slotProps={{
-          input: {
-            startAdornment: (
-              <InputAdornment position="start">
-                <SearchIcon fontSize="small" />
-              </InputAdornment>
-            ),
-          },
-          htmlInput: { "aria-label": `Buscar ${plural}` },
-        }}
-      />
+      {hasSearch && (
+        <TextField
+          fullWidth
+          size="small"
+          placeholder={`Buscar por ${searchColumns.map((c) => c.label.toLowerCase()).join(", ")}`}
+          value={query}
+          onChange={handleSearchChange}
+          sx={{ mb: 3 }}
+          slotProps={{
+            input: {
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon fontSize="small" />
+                </InputAdornment>
+              ),
+            },
+            htmlInput: { "aria-label": `Buscar ${plural}` },
+          }}
+        />
+      )}
 
       <AsyncState loading={loading} error={error}>
         {() => {
@@ -54,7 +64,11 @@ function EntityBrowser({ entityKey }) {
             return <Typography sx={{ color: "text.secondary" }}>Todavía no hay {plural}.</Typography>;
           }
 
-          const visibleRows = filterBySearch(data.rows, entity.browser.searchFields, query);
+          const visibleRows = filterBySearch(
+            data.rows,
+            (row) => searchColumns.map((column) => getColumnText(column, row, data.lookups)),
+            query,
+          );
 
           if (visibleRows.length === 0) {
             return (

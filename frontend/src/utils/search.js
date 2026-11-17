@@ -6,12 +6,12 @@ export function normalizeText(value) {
     .trim();
 }
 
-export function filterBySearch(rows, fields, query) {
+export function filterBySearch(rows, getSearchTexts, query) {
   const needle = normalizeText(query);
   if (!needle) {
     return rows;
   }
   return rows.filter((row) =>
-    fields.some((field) => normalizeText(row[field]).includes(needle)),
+    getSearchTexts(row).some((text) => normalizeText(text).includes(needle)),
   );
 }
