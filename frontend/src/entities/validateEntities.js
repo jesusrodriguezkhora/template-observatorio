@@ -1,5 +1,5 @@
-import { COLUMN_TYPES } from "../columns";
-
+import { COLUMN_TYPES, DEFAULT_COLUMN_TYPE } from "../columns";
+import { TAB_TYPES } from "../tabs";
 
 export function validateEntities(definitions) {
   const errors = [];
@@ -19,40 +19,120 @@ export function validateEntities(definitions) {
       errors.push(`${where}: falta displayField`);
     }
 
-    if (entity.parent && !byKey.has(entity.parent.entity)) {
-      errors.push(`${where}: su padre "${entity.parent.entity}" no existe`);
+    errors.push(...validateParent(entity, where, byKey));
+
+    if (!Array.isArray(entity.columns) || entity.columns.length === 0) {
+      errors.push(`${where}: no tiene columnas`);
+    } else {
+      errors.push(...validateValueDefs(entity.columns, `${where}, columna`, byKey));
     }
 
-    const visited = new Set([entity.key]);
-    let current = entity;
-    while (current?.parent) {
-      const parentKey = current.parent.entity;
-      if (visited.has(parentKey)) {
-        errors.push(`${where}: hay un ciclo en la jerarquía de padres`);
-        break;
-      }
-      visited.add(parentKey);
-      current = byKey.get(parentKey);
+    errors.push(...validateTabs(entity, where, byKey));
+  }
+
+  return errors;
+}
+
+export function assertValidEntities(definitions) {
+  const errors = validateEntities(definitions);
+  if (errors.length > 0) {
+    throw new Error(`Configuración de entidades inválida:\n- ${errors.join("\n- ")}`);
+  }
+}
+
+function validateParent(entity, where, byKey) {
+  const errors = [];
+
+  if (entity.parent && !byKey.has(entity.parent.entity)) {
+    errors.push(`${where}: su padre "${entity.parent.entity}" no existe`);
+  }
+
+  const visited = new Set([entity.key]);
+  let current = entity;
+  while (current?.parent) {
+    const parentKey = current.parent.entity;
+    if (visited.has(parentKey)) {
+      errors.push(`${where}: hay un ciclo en la jerarquía de padres`);
+      break;
+    }
+    visited.add(parentKey);
+    current = byKey.get(parentKey);
+  }
+
+  return errors;
+}
+
+function validateValueDefs(defs, where, byKey) {
+  const errors = [];
+  const seenFields = new Set();
+
+  for (const def of defs) {
+    const defWhere = `${where} "${def.field}"`;
+
+    if (!def.field || !def.label) {
+      errors.push(`${where} sin field o sin label`);
+    }
+    if (seenFields.has(def.field)) {
+      errors.push(`${defWhere}: está repetida`);
+    }
+    seenFields.add(def.field);
+
+    const typeName = def.type ?? DEFAULT_COLUMN_TYPE;
+    const columnType = COLUMN_TYPES[typeName];
+    if (!columnType) {
+      errors.push(`${defWhere}: el tipo "${typeName}" no existe`);
+      continue;
     }
 
-    errors.push(...validateColumns(entity, where, byKey));
+    errors.push(...missingOptions(def, columnType, `${defWhere}: el tipo "${typeName}"`));
 
-    const tabKeys = new Set();
-    for (const tab of entity.detail?.tabs ?? []) {
-      if (tabKeys.has(tab.key)) {
-        errors.push(`${where}: la pestaña "${tab.key}" está repetida`);
-      }
-      tabKeys.add(tab.key);
+    const lookupKey = columnType.lookupEntity?.(def);
+    if (lookupKey && !byKey.has(lookupKey)) {
+      errors.push(`${defWhere}: la entidad "${lookupKey}" no existe`);
+    }
+  }
 
-      if (tab.type === "related") {
-        const target = byKey.get(tab.entity);
-        if (!target) {
-          errors.push(`${where}, pestaña "${tab.key}": la entidad "${tab.entity}" no existe`);
-        } else if (!descendsFrom(target, entity.key, byKey)) {
-          errors.push(
-            `${where}, pestaña "${tab.key}": "${tab.entity}" no cuelga de "${entity.key}"`,
-          );
-        }
+  return errors;
+}
+
+function validateTabs(entity, where, byKey) {
+  const errors = [];
+  const tabs = entity.detail?.tabs;
+
+  if (!Array.isArray(tabs) || tabs.length === 0) {
+    errors.push(`${where}: no tiene pestañas`);
+    return errors;
+  }
+
+  const seenKeys = new Set();
+  for (const tab of tabs) {
+    const tabWhere = `${where}, pestaña "${tab.key}"`;
+
+    if (seenKeys.has(tab.key)) {
+      errors.push(`${tabWhere}: está repetida`);
+    }
+    seenKeys.add(tab.key);
+
+    const tabType = TAB_TYPES[tab.type];
+    if (!tabType) {
+      errors.push(`${tabWhere}: el tipo "${tab.type}" no existe`);
+      continue;
+    }
+
+    errors.push(...missingOptions(tab, tabType, `${tabWhere}: el tipo "${tab.type}"`));
+
+    const valueDefs = tabType.valueDefs?.(tab);
+    if (Array.isArray(valueDefs)) {
+      errors.push(...validateValueDefs(valueDefs, `${tabWhere}, campo`, byKey));
+    }
+
+    const relatedKey = tabType.relatedEntity?.(tab);
+    if (relatedKey) {
+      const target = byKey.get(relatedKey);
+      if (!target) {
+        errors.push(`${tabWhere}: la entidad "${relatedKey}" no existe`);
+      } else if (!descendsFrom(target, entity.key, byKey)) {
+        errors.push(`${tabWhere}: "${relatedKey}" no cuelga de "${entity.key}"`);
       }
     }
   }
@@ -60,45 +140,10 @@ export function validateEntities(definitions) {
   return errors;
 }
 
-function validateColumns(entity, where, byKey) {
-  const errors = [];
-
-  if (!Array.isArray(entity.columns) || entity.columns.length === 0) {
-    errors.push(`${where}: no tiene columnas`);
-    return errors;
-  }
-
-  const seenFields = new Set();
-  for (const column of entity.columns) {
-    const columnWhere = `${where}, columna "${column.field}"`;
-
-    if (!column.field || !column.label) {
-      errors.push(`${where}: hay una columna sin field o sin label`);
-    }
-    if (seenFields.has(column.field)) {
-      errors.push(`${columnWhere}: está repetida`);
-    }
-    seenFields.add(column.field);
-
-    const columnType = COLUMN_TYPES[column.type];
-    if (!columnType) {
-      errors.push(`${columnWhere}: el tipo "${column.type}" no existe`);
-      continue;
-    }
-
-    for (const option of columnType.requires ?? []) {
-      if (column[option] === undefined) {
-        errors.push(`${columnWhere}: el tipo "${column.type}" necesita la opción "${option}"`);
-      }
-    }
-
-    const lookupKey = columnType.lookupEntity?.(column);
-    if (lookupKey && !byKey.has(lookupKey)) {
-      errors.push(`${columnWhere}: la entidad "${lookupKey}" no existe`);
-    }
-  }
-
-  return errors;
+function missingOptions(def, type, prefix) {
+  return (type.requires ?? [])
+    .filter((option) => def[option] === undefined)
+    .map((option) => `${prefix} necesita la opción "${option}"`);
 }
 
 function descendsFrom(entity, ancestorKey, byKey) {
