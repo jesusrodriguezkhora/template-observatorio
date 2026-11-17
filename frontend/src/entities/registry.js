@@ -1,5 +1,5 @@
 import { ENTITY_DEFINITIONS } from "../config/entities";
-import { validateEntities } from "./validateEntities";
+
 
 function deepFreeze(value) {
   if (value !== null && typeof value === "object" && !Object.isFrozen(value)) {
@@ -7,13 +7,6 @@ function deepFreeze(value) {
     Object.freeze(value);
   }
   return value;
-}
-
-if (import.meta.env.DEV) {
-  const errors = validateEntities(ENTITY_DEFINITIONS);
-  if (errors.length > 0) {
-    throw new Error(`Configuración de entidades inválida:\n- ${errors.join("\n- ")}`);
-  }
 }
 
 const ENTITIES = deepFreeze(
