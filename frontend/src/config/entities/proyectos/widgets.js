@@ -13,11 +13,18 @@ export const widgets = {
       { type: "info", subtitle: "Descripción", field: "descripcion" },
     ],
   },
+  presupuesto: {
+    title: "Presupuesto",
+    fragments: [
+      { type: "info", subtitle: "Solicitado", field: "presupuesto_solicitado", valueType: "currency" },
+      { type: "info", subtitle: "Concedido", field: "presupuesto_concedido", valueType: "currency" },
+    ],
+  },
   fechas: {
     title: "Fechas",
     fragments: [
-      { type: "info", subtitle: "Fecha de inicio", field: "fecha_inicio" },
-      { type: "info", subtitle: "Fecha de fin", field: "fecha_fin" },
+      { type: "info", subtitle: "Fecha de inicio", field: "fecha_inicio", valueType: "date" },
+      { type: "info", subtitle: "Fecha de fin", field: "fecha_fin", valueType: "date" },
     ],
   },
 };

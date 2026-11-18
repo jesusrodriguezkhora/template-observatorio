@@ -8,6 +8,7 @@ export const tabs = [
         columns: [
           { size: 1, widgets: ["responsable", "fechas"] },
           { size: 2, widgets: ["informacion"] },
+          { size: 1, widgets: ["presupuesto"] },
         ],
       },
     ],

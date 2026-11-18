@@ -3,6 +3,8 @@ export const MOCK_DB = Object.freeze({
     {
       id: 1,
       nombre: "Rehabilitación del casco histórico",
+      presupuesto_solicitado: 19633507.15,
+      presupuesto_concedido: 14270696.01,
       programa: "Programa de Fondos Europeos 2021-2027",
       area_coordinadora: "Área de Urbanismo",
       responsable: "Jefatura del Servicio de Urbanismo",
@@ -14,6 +16,8 @@ export const MOCK_DB = Object.freeze({
     {
       id: 2,
       nombre: "Plan de movilidad sostenible",
+      presupuesto_solicitado: 8500000,
+      presupuesto_concedido: 6120000.5,
       programa: "Programa de Fondos Europeos 2021-2027",
       area_coordinadora: "Área de Movilidad",
       responsable: null,
@@ -25,6 +29,8 @@ export const MOCK_DB = Object.freeze({
     {
       id: 3,
       nombre: "Digitalización de servicios municipales",
+      presupuesto_solicitado: 2400000,
+      presupuesto_concedido: null,
       programa: null,
       area_coordinadora: "Área de Innovación",
       responsable: "Dirección de Sistemas de Información",
@@ -81,11 +87,11 @@ export const MOCK_DB = Object.freeze({
     },
   ],
   instrumentos: [
-    { id: 1, nombre: "Contrato de obras de pavimentación", actuacion_id: 1, tipo: "Contrato de obras", expediente: "EXP-2026/014", fecha_firma: "2026-06-12" },
-    { id: 2, nombre: "Convenio con la Diputación Provincial", actuacion_id: 1, tipo: "Convenio", expediente: "EXP-2026/021", fecha_firma: null },
-    { id: 3, nombre: "Subvención a propietarios de inmuebles", actuacion_id: 2, tipo: "Subvención", expediente: "EXP-2027/003", fecha_firma: null },
-    { id: 4, nombre: "Licitación de redacción del proyecto", actuacion_id: 3, tipo: "Contrato de servicios", expediente: "EXP-2026/030", fecha_firma: "2026-08-20" },
-    { id: 5, nombre: "Contrato de suministro de marquesinas", actuacion_id: 4, tipo: "Contrato de suministro", expediente: "EXP-2026/018", fecha_firma: "2026-04-15" },
-    { id: 6, nombre: "Encargo a medio propio", actuacion_id: 4, tipo: "Encargo a medio propio", expediente: null, fecha_firma: null },
+    { id: 1, nombre: "Contrato de obras de pavimentación", importe: 412300.5, actuacion_id: 1, tipo: "Contrato de obras", expediente: "EXP-2026/014", fecha_firma: "2026-06-12" },
+    { id: 2, nombre: "Convenio con la Diputación Provincial", importe: null, actuacion_id: 1, tipo: "Convenio", expediente: "EXP-2026/021", fecha_firma: null },
+    { id: 3, nombre: "Subvención a propietarios de inmuebles", importe: 250000, actuacion_id: 2, tipo: "Subvención", expediente: "EXP-2027/003", fecha_firma: null },
+    { id: 4, nombre: "Licitación de redacción del proyecto", importe: 38900, actuacion_id: 3, tipo: "Contrato de servicios", expediente: "EXP-2026/030", fecha_firma: "2026-08-20" },
+    { id: 5, nombre: "Contrato de suministro de marquesinas", importe: 187500.75, actuacion_id: 4, tipo: "Contrato de suministro", expediente: "EXP-2026/018", fecha_firma: "2026-04-15" },
+    { id: 6, nombre: "Encargo a medio propio", importe: 95000, actuacion_id: 4, tipo: "Encargo a medio propio", expediente: null, fecha_firma: null },
   ],
 });
