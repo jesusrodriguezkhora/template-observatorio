@@ -67,7 +67,8 @@ export const widgets = {
       {
         type: "keyvalue",
         rows: [
-          { label: "% cofinanciación", field: "porcentaje_cofinanciacion", valueType: "percent", color: "success.main" },
+          { label: "% Cofinanciación", field: "porcentaje_cofinanciacion", valueType: "percent" },
+          { label: "% Ejecución", field: "porcentaje_ejecucion", valueType: "percent" },
         ],
       },
     ],

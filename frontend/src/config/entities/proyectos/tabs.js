@@ -7,13 +7,12 @@ export const tabs = [
       {
         columns: [
           { size: 2, widgets: ["cabecera"] },
-          { size: 1, widgets: ["presupuesto"] },
+          { size: 1, widgets: ["informacion"] },
         ],
       },
       {
         columns: [
-          { size: 1, widgets: ["responsable"] },
-          { size: 1, widgets: ["informacion", "fechas"] },
+          { size: 1, widgets: ["responsable", "fechas"] },
           { size: 1, widgets: ["financiacion"] },
         ],
       },
