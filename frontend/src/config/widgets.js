@@ -5,10 +5,10 @@ export const WIDGET_CONFIG = Object.freeze({
   fragmentGap: 2,
   subtitleColor: "primary.main",
   title: {
-    imageWidth: "55%",
+    imageWidth: "30%",
     imageAspectRatio: "16 / 10",
     imageBorderRadius: 2,
-    overlineColor: "error.main",
+    overlineColor: "secondary.main",
     titleVariant: "h4",
     titleColor: "primary.main",
   },

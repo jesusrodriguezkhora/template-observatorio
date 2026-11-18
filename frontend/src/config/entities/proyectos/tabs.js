@@ -6,9 +6,14 @@ export const tabs = [
     grids: [
       {
         columns: [
+          { size: 2, widgets: ["cabecera"] },
+          { size: 1, widgets: ["presupuesto"] },
+        ],
+      },
+      {
+        columns: [
           { size: 1, widgets: ["responsable", "fechas"] },
           { size: 2, widgets: ["informacion"] },
-          { size: 1, widgets: ["presupuesto"] },
         ],
       },
     ],

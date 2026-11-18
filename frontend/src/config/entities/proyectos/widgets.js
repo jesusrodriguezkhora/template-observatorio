@@ -1,4 +1,16 @@
 export const widgets = {
+  cabecera: {
+    fragments: [
+      {
+        type: "title",
+        image: "imagen",
+        overline: "id",
+        overlineLabel: "ID proyecto",
+        title: ["nombre_corto", "nombre"],
+        subtitle: "programa",
+      },
+    ],
+  },
   responsable: {
     title: "Responsable y coordinación",
     fragments: [

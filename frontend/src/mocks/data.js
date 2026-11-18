@@ -18,8 +18,8 @@ export const MOCK_DB = Object.freeze({
     {
       id: 2,
       nombre: "Plan de movilidad sostenible",
-      nombre_corto: "null",
-      imagen: "null",
+      nombre_corto: null,
+      imagen: "/mocks/proyecto-1.svg",
       presupuesto_solicitado: 8500000,
       presupuesto_concedido: 6120000.5,
       programa: "Programa de Fondos Europeos 2021-2027",
