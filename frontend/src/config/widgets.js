@@ -4,6 +4,12 @@ export const WIDGET_CONFIG = Object.freeze({
   titleGap: 2,
   fragmentGap: 2,
   subtitleColor: "primary.main",
+  keyvalue: {
+    rowGap: 1,
+    labelColor: "text.secondary",
+    valueWeight: 600,
+    dividers: true,
+  },
   title: {
     imageWidth: "30%",
     imageAspectRatio: "16 / 10",

@@ -3,6 +3,8 @@ import { isEmptyValue } from "../columns/helpers";
 import { toValueDef } from "./helpers";
 import TitleFragment from "./TitleFragment";
 import { resolveSlot, slotValueDefs, validateSlot } from "./slots";
+import KeyValueFragment from "./KeyValueFragment";
+import { isRowEmpty, validateRows } from "./keyvalueRows";
 
 const TITLE_SLOTS = ["image", "overline", "title", "subtitle"];
 
@@ -23,6 +25,16 @@ export const FRAGMENT_TYPES = Object.freeze({
       TITLE_SLOTS.every((name) => resolveSlot(fragment[name], record) === null),
     validate: (fragment) =>
       TITLE_SLOTS.flatMap((name) => validateSlot(fragment[name], name)),
+  },
+  keyvalue: {
+    Fragment: KeyValueFragment,
+    requires: ["rows"],
+    valueDefs: (fragment) =>
+      (fragment.rows ?? []).filter((row) => row.field).map(toValueDef),
+    isEmpty: (fragment, record) =>
+      fragment.rows.every((row) => isRowEmpty(row, record)),
+    validate: (fragment) =>
+      fragment.rows === undefined ? [] : validateRows(fragment.rows),
   },
 });
 
