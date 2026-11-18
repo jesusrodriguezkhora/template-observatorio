@@ -37,6 +37,7 @@ export function validateValueDefs(defs, where, byKey, checkDuplicates) {
     }
 
     errors.push(...missingOptions(def, columnType, `${defWhere}: el tipo "${typeName}"`));
+    errors.push(...(columnType.validate?.(def) ?? []).map((message) => `${defWhere}: ${message}`));
 
     const lookupKey = columnType.lookupEntity?.(def);
     if (lookupKey && !byKey.has(lookupKey)) {

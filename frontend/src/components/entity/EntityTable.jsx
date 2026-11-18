@@ -5,6 +5,7 @@ import { getColumnType } from "../../columns";
 import { TABLE_CONFIG } from "../../config/tables";
 import { getDetailPath } from "../../entities/paths";
 import ColumnValue from "../../columns/ColumnValue";
+import { getColumnAlign } from "../../columns";
 
 const headerRowSx = (theme) => ({
   bgcolor: `rgba(${theme.vars.palette.primary.mainChannel} / 0.06)`,
@@ -39,7 +40,7 @@ function EntityTable({ entity, rows, lookups, hiddenFields = [] }) {
             {columns.map((column) => (
               <TableCell
                 key={column.field}
-                align={column.align}
+                align={getColumnAlign(column)}
                 sx={{ fontWeight: 600, py: TABLE_CONFIG.headerPaddingY, width: column.width }}
               >
                 {column.label}
@@ -56,7 +57,7 @@ function EntityTable({ entity, rows, lookups, hiddenFields = [] }) {
               sx={{ cursor: "pointer" }}
             >
               {columns.map((column) => (
-                <TableCell key={column.field} align={column.align}>
+                <TableCell key={column.field} align={getColumnAlign(column)}>
                   <ColumnValue def={column} row={row} entity={entity} lookups={lookups} />
                 </TableCell>
               ))}
