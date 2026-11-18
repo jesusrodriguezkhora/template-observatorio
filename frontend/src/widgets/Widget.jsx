@@ -16,19 +16,21 @@ function Widget({ widget, entity, record, lookups, grow = false }) {
 
   return (
     <Paper
-      component="section"
+      component={widget.title ? "section" : "div"}
       variant="outlined"
-      aria-labelledby={titleId}
+      aria-labelledby={widget.title ? titleId : undefined}
       sx={{ borderRadius: WIDGET_CONFIG.borderRadius, p: WIDGET_CONFIG.padding, flexGrow: grow ? 1 : 0 }}
     >
-      <Typography
-        id={titleId}
-        component="h2"
-        variant="subtitle1"
-        sx={{ fontWeight: 600, mb: WIDGET_CONFIG.titleGap }}
-      >
-        {widget.title}
-      </Typography>
+      {widget.title && (
+        <Typography
+          id={titleId}
+          component="h2"
+          variant="subtitle1"
+          sx={{ fontWeight: 600, mb: WIDGET_CONFIG.titleGap }}
+        >
+          {widget.title}
+        </Typography>
+      )}
       <Stack spacing={WIDGET_CONFIG.fragmentGap}>
         {visibleFragments.map(({ fragment, key }) => {
           const { Fragment } = getFragmentType(fragment.type);

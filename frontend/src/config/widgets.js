@@ -4,6 +4,14 @@ export const WIDGET_CONFIG = Object.freeze({
   titleGap: 2,
   fragmentGap: 2,
   subtitleColor: "primary.main",
+  title: {
+    imageWidth: "55%",
+    imageAspectRatio: "16 / 10",
+    imageBorderRadius: 2,
+    overlineColor: "error.main",
+    titleVariant: "h4",
+    titleColor: "primary.main",
+  },
   grid: {
     gridGap: 3,
     columnGap: 3,
