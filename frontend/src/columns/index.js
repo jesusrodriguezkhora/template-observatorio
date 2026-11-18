@@ -3,9 +3,15 @@ import LinkCell from "./LinkCell";
 import RefCell from "./RefCell";
 import DateCell from "./DateCell";
 import CurrencyCell from "./CurrencyCell";
-import { getRefLabel, getRefSourceKey } from "./helpers";
+import {
+  getRefLabel,
+  getRefSourceKey,
+  toIdList,
+  validateRefTarget,
+} from "./helpers";
 import PercentCell from "./PercentCell";
 import BooleanCell from "./BooleanCell";
+import ChipsCell from "./ChipsCell";
 import {
   formatBoolean,
   formatCurrency,
@@ -24,10 +30,7 @@ export const COLUMN_TYPES = Object.freeze({
     requiresOneOf: ["entity", "catalog"],
     lookupSource: getRefSourceKey,
     toText: getRefLabel,
-    validate: (column) =>
-      column.entity !== undefined && column.catalog !== undefined
-        ? ['usa "entity" o "catalog", no los dos']
-        : [],
+    validate: validateRefTarget,
   },
   date: {
     Cell: DateCell,
@@ -55,6 +58,16 @@ export const COLUMN_TYPES = Object.freeze({
   boolean: {
     Cell: BooleanCell,
     toText: formatBoolean,
+  },
+  chips: {
+    Cell: ChipsCell,
+    requiresOneOf: ["entity", "catalog"],
+    lookupSource: getRefSourceKey,
+    toText: (value, column, lookups) =>
+      toIdList(value)
+        .map((id) => getRefLabel(id, column, lookups))
+        .join(", "),
+    validate: validateRefTarget,
   },
 });
 
