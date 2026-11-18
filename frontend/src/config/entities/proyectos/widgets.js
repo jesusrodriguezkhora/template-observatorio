@@ -30,6 +30,7 @@ export const widgets = {
     fragments: [
       { type: "info", subtitle: "Solicitado", field: "presupuesto_solicitado", valueType: "currency" },
       { type: "info", subtitle: "Concedido", field: "presupuesto_concedido", valueType: "currency" },
+      { type: "info", subtitle: "Ejecución (gasto pagado)", field: "porcentaje_ejecucion", valueType: "percent" },
     ],
   },
   fechas: {
@@ -51,31 +52,22 @@ export const widgets = {
         type: "keyvalue",
         rows: [
           { label: "Presupuesto solicitado", field: "presupuesto_solicitado", valueType: "currency" },
-          {
-            label: "Presupuesto concedido",
-            field: "presupuesto_concedido",
-            valueType: "currency",
-            color: "primary.main",
-          },
+          { label: "Presupuesto concedido", field: "presupuesto_concedido", valueType: "currency", color: "primary.main" },
           { label: "FEDER concedido", field: "feder_concedido", valueType: "currency" },
-          {
-            label: "Ejecutado (pagado)",
-            field: "presupuesto_ejecutado",
-            valueType: "currency",
-            color: "success.main",
-          },
+          { label: "Ejecutado (pagado)", field: "presupuesto_ejecutado", valueType: "currency", color: "success.main" },
+          { label: "IVA financiable", field: "iva_financiable", valueType: "boolean" },
         ],
       },
       {
         type: "keyvalue",
         rows: [
-          {
-            label: "Pendiente de justificar",
-            field: "pendiente_justificar",
-            valueType: "currency",
-            color: "error.main",
-            hideIfEmpty: true,
-          },
+          { label: "Pendiente de justificar", field: "pendiente_justificar", valueType: "currency", color: "error.main", hideIfEmpty: true },
+        ],
+      },
+      {
+        type: "keyvalue",
+        rows: [
+          { label: "% cofinanciación", field: "porcentaje_cofinanciacion", valueType: "percent", color: "success.main" },
         ],
       },
     ],

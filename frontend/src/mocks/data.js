@@ -3,7 +3,7 @@ export const MOCK_DB = Object.freeze({
     {
       id: 1,
       nombre: "Rehabilitación del casco histórico",
-      porcentaje_confinanciacion: 60,
+      porcentaje_cofinanciacion: 60,
       iva_financiable: 1,
       porcentaje_ejecucion: 2.37,
       feder_concedido: 8562417.61,
@@ -24,7 +24,7 @@ export const MOCK_DB = Object.freeze({
     {
       id: 2,
       nombre: "Plan de movilidad sostenible",
-      porcentaje_confinanciacion: 60,
+      porcentaje_cofinanciacion: 60,
       iva_financiable: 0,
       porcentaje_ejecucion: 20.42,
       feder_concedido: 3672000.3,
@@ -45,7 +45,7 @@ export const MOCK_DB = Object.freeze({
     {
       id: 3,
       nombre: "Digitalización de servicios municipales",
-      porcentaje_confinanciacion: null,
+      porcentaje_cofinanciacion: null,
       iva_financiable: null,
       porcentaje_ejecucion: null,
       feder_concedido: null,
