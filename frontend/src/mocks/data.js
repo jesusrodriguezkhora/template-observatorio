@@ -15,8 +15,8 @@ export const MOCK_DB = Object.freeze({
     { id: 8, nombre: "Educación", color_fondo: "#FBE9E7", color_texto: "#BF360C" },
   ],
   subtemas: [
-    { id: 1, nombre: "Participación ciudadana" },
-    { id: 2, nombre: "Economía azul" },
+    { id: 1, nombre: "Participación ciudadana", color_fondo: "#8256cd", color_texto: "#FFFFFF" },
+    { id: 2, nombre: "Economía azul", color_fondo: "#0D47A1", color_texto: "#FFFFFF" },
   ],
   proyectos: [
     {
