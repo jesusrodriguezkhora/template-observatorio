@@ -14,7 +14,7 @@ export const widgets = {
   responsable: {
     title: "Responsable y coordinación",
     fragments: [
-      { type: "info", subtitle: "Área coordinadora", field: "area_coordinadora" },
+      { type: "info", subtitle: "Área coordinadora", field: "area", valueType: "ref", catalog: "areas" },
       { type: "info", subtitle: "Responsable del proyecto", field: "responsable" },
     ],
   },
