@@ -3,7 +3,7 @@ import LinkCell from "./LinkCell";
 import RefCell from "./RefCell";
 import DateCell from "./DateCell";
 import CurrencyCell from "./CurrencyCell";
-import { getRefLabel } from "./helpers";
+import { getRefLabel, getRefSourceKey } from "./helpers";
 import PercentCell from "./PercentCell";
 import BooleanCell from "./BooleanCell";
 import {
@@ -21,9 +21,13 @@ export const COLUMN_TYPES = Object.freeze({
   link: { Cell: LinkCell },
   ref: {
     Cell: RefCell,
-    requires: ["entity"],
-    lookupEntity: (column) => column.entity,
+    requiresOneOf: ["entity", "catalog"],
+    lookupSource: getRefSourceKey,
     toText: getRefLabel,
+    validate: (column) =>
+      column.entity !== undefined && column.catalog !== undefined
+        ? ['usa "entity" o "catalog", no los dos']
+        : [],
   },
   date: {
     Cell: DateCell,

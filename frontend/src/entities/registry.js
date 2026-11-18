@@ -1,13 +1,6 @@
 import { ENTITY_DEFINITIONS } from "../config/entities";
+import { deepFreeze } from "../utils/deepFreeze";
 
-
-function deepFreeze(value) {
-  if (value !== null && typeof value === "object" && !Object.isFrozen(value)) {
-    Object.values(value).forEach(deepFreeze);
-    Object.freeze(value);
-  }
-  return value;
-}
 
 const ENTITIES = deepFreeze(
   Object.fromEntries(ENTITY_DEFINITIONS.map((entity) => [entity.key, entity])),

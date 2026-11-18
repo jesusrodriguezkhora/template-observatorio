@@ -2,26 +2,44 @@ import { getResource, listResource } from "../services/dataService";
 import { getColumnType } from "../columns";
 import { NotFoundError } from "../services/errors";
 import { getAncestors, getEntity, getRelationPath } from "./registry";
+import { getLookupSource } from "./lookupSources";
 
 function getLookupKeys(defs) {
   const keys = defs
-    .map((def) => getColumnType(def.type).lookupEntity?.(def))
+    .map((def) => getColumnType(def.type).lookupSource?.(def))
     .filter(Boolean);
   return [...new Set(keys)];
 }
 
-export async function loadLookups(defs) {
-  const lookupKeys = getLookupKeys(defs);
-  const results = await Promise.all(lookupKeys.map((lookupKey) => listResource(lookupKey)));
+const catalogCache = new Map();
 
-  const lookups = {};
-  lookupKeys.forEach((lookupKey, index) => {
-    const { displayField } = getEntity(lookupKey);
-    lookups[lookupKey] = Object.fromEntries(
-      results[index].map((lookupRow) => [String(lookupRow.id), lookupRow[displayField]]),
-    );
-  });
-  return lookups;
+function listLookupSource(source) {
+  if (source.kind !== "catalog") {
+    return listResource(source.key);
+  }
+  if (!catalogCache.has(source.key)) {
+    const request = listResource(source.key).catch((error) => {
+      catalogCache.delete(source.key);
+      throw error;
+    });
+    catalogCache.set(source.key, request);
+  }
+  return catalogCache.get(source.key);
+}
+
+export async function loadLookups(defs) {
+  const sources = getLookupKeys(defs).map(getLookupSource);
+  const results = await Promise.all(sources.map(listLookupSource));
+
+  return Object.fromEntries(
+    sources.map((source, index) => [
+      source.key,
+      {
+        ...source,
+        rows: Object.fromEntries(results[index].map((row) => [String(row.id), row])),
+      },
+    ]),
+  );
 }
 
 export async function loadBrowserData(entityKey) {

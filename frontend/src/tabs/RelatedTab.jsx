@@ -15,7 +15,7 @@ function RelatedTab({ tab, entity, record }) {
   );
 
   const hiddenFields = target.columns
-    .filter((column) => getColumnType(column.type).lookupEntity?.(column) === entity.key)
+    .filter((column) => getColumnType(column.type).lookupSource?.(column) === entity.key)
     .map((column) => column.field);
 
   return (
