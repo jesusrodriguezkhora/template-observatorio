@@ -4,6 +4,7 @@ export const WIDGET_CONFIG = Object.freeze({
   titleGap: 2,
   fragmentGap: 2,
   subtitleColor: "primary.main",
+  textVariant: "body1",
   keyvalue: {
     rowGap: 1,
     labelColor: "text.main",

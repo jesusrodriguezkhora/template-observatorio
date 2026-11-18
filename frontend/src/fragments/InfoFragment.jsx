@@ -2,6 +2,7 @@ import { Box, Typography } from "@mui/material";
 import ColumnValue from "../columns/ColumnValue";
 import FragmentSubtitle from "./FragmentSubtitle";
 import { toValueDef } from "./helpers";
+import { WIDGET_CONFIG } from "../config/widgets";
 
 function InfoFragment({ fragment, entity, record, lookups }) {
   const content = fragment.field ? (
@@ -22,7 +23,7 @@ function InfoFragment({ fragment, entity, record, lookups }) {
       )}
       <Typography
         component="div"
-        variant="body1"
+        variant={WIDGET_CONFIG.textVariant}
         sx={{ whiteSpace: "pre-line" }}
       >
         {content}

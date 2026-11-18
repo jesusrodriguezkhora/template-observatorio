@@ -56,14 +56,14 @@ function KeyValueFragment({ fragment, entity, record, lookups }) {
           >
             <Typography
               component="dt"
-              variant="body2"
+              variant={WIDGET_CONFIG.textVariant}
               sx={{ color: KEYVALUE_CONFIG.labelColor }}
             >
               {row.label}
             </Typography>
             <Typography
               component="dd"
-              variant="body2"
+              variant={WIDGET_CONFIG.textVariant}
               sx={{
                 m: 0,
                 textAlign: "right",
