@@ -1,8 +1,9 @@
 import { TAB_TYPES } from "../tabs";
 import { validateGrids, validateWidgetCatalog } from "../widgets/validateWidgets";
 import { missingOptions, validateValueDefs } from "./validationHelpers";
+import { validateCatalogs } from "./validateCatalogs";
 
-export function validateEntities(definitions) {
+export function validateEntities(definitions, catalogs = []) {
   const errors = [];
   const byKey = new Map();
 
@@ -12,6 +13,9 @@ export function validateEntities(definitions) {
     }
     byKey.set(entity.key, entity);
   }
+
+  errors.push(...validateCatalogs(catalogs, byKey));
+  const sourceKeys = new Set([...byKey.keys(), ...catalogs.map((catalog) => catalog.key)]);
 
   for (const entity of definitions) {
     const where = `Entidad "${entity.key}"`;
@@ -25,18 +29,18 @@ export function validateEntities(definitions) {
     if (!Array.isArray(entity.columns) || entity.columns.length === 0) {
       errors.push(`${where}: no tiene columnas`);
     } else {
-      errors.push(...validateValueDefs(entity.columns, `${where}, columna`, byKey, true));
+      errors.push(...validateValueDefs(entity.columns, `${where}, columna`, sourceKeys, true));
     }
 
-    errors.push(...validateWidgetCatalog(entity.widgets, where, byKey));
-    errors.push(...validateTabs(entity, where, byKey));
+    errors.push(...validateWidgetCatalog(entity.widgets, where, sourceKeys));
+    errors.push(...validateTabs(entity, where, byKey, sourceKeys));
   }
 
   return errors;
 }
 
-export function assertValidEntities(definitions) {
-  const errors = validateEntities(definitions);
+export function assertValidEntities(definitions, catalogs) {
+  const errors = validateEntities(definitions, catalogs);
   if (errors.length > 0) {
     throw new Error(`Configuración de entidades inválida:\n- ${errors.join("\n- ")}`);
   }
@@ -65,7 +69,7 @@ function validateParent(entity, where, byKey) {
 }
 
 
-function validateTabs(entity, where, byKey) {
+function validateTabs(entity, where, byKey, sourceKeys) {
   const errors = [];
   const tabs = entity.detail?.tabs;
 
@@ -96,7 +100,7 @@ function validateTabs(entity, where, byKey) {
     } else if (tabType.valueDefs) {
       const valueDefs = tabType.valueDefs(tab, entity);
       if (Array.isArray(valueDefs)) {
-        errors.push(...validateValueDefs(valueDefs, `${tabWhere}, campo`, byKey, false));
+        errors.push(...validateValueDefs(valueDefs, `${tabWhere}, campo`, sourceKeys, false));
       }
     }
 

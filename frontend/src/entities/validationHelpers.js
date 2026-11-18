@@ -14,7 +14,7 @@ export function missingOptions(def, type, prefix) {
   return errors;
 }
 
-export function validateValueDefs(defs, where, byKey, checkDuplicates) {
+export function validateValueDefs(defs, where, sourceKeys, checkDuplicates) {
   const errors = [];
   const seenFields = new Set();
 
@@ -39,9 +39,9 @@ export function validateValueDefs(defs, where, byKey, checkDuplicates) {
     errors.push(...missingOptions(def, columnType, `${defWhere}: el tipo "${typeName}"`));
     errors.push(...(columnType.validate?.(def) ?? []).map((message) => `${defWhere}: ${message}`));
 
-    const lookupKey = columnType.lookupEntity?.(def);
-    if (lookupKey && !byKey.has(lookupKey)) {
-      errors.push(`${defWhere}: la entidad "${lookupKey}" no existe`);
+    const lookupKey = columnType.lookupSource?.(def);
+    if (lookupKey && !sourceKeys.has(lookupKey)) {
+      errors.push(`${defWhere}: no existe ninguna entidad ni catálogo "${lookupKey}"`);
     }
   }
 
