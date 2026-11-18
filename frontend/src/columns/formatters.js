@@ -36,3 +36,32 @@ export function formatCurrency(value, column = {}) {
   };
   return getFormatter(Intl.NumberFormat, options).format(number);
 }
+
+export function formatPercent(value, column = {}) {
+  const number = Number(value);
+  if (!Number.isFinite(number)) {
+    return String(value);
+  }
+  const ratio = column.fraction ? number : number / 100;
+  const decimals = column.decimals ?? LOCALE_CONFIG.percentDecimals;
+  return getFormatter(Intl.NumberFormat, {
+    style: "percent",
+    minimumFractionDigits: 0,
+    maximumFractionDigits: decimals,
+  }).format(ratio);
+}
+
+const TRUE_VALUES = new Set([true, 1, "1", "true", "si", "sí"]);
+const FALSE_VALUES = new Set([false, 0, "0", "false", "no"]);
+
+export function formatBoolean(value, column = {}) {
+  const key = typeof value === "string" ? value.trim().toLowerCase() : value;
+  const labels = { ...LOCALE_CONFIG.booleanLabels, ...column.labels };
+  if (TRUE_VALUES.has(key)) {
+    return labels.true;
+  }
+  if (FALSE_VALUES.has(key)) {
+    return labels.false;
+  }
+  return String(value);
+}
