@@ -3,6 +3,8 @@ export const MOCK_DB = Object.freeze({
     {
       id: 1,
       nombre: "Rehabilitación del casco histórico",
+      nombre_corto: "Casco histórico",
+      imagen: "/mocks/proyecto-1.svg",
       presupuesto_solicitado: 19633507.15,
       presupuesto_concedido: 14270696.01,
       programa: "Programa de Fondos Europeos 2021-2027",
@@ -16,6 +18,8 @@ export const MOCK_DB = Object.freeze({
     {
       id: 2,
       nombre: "Plan de movilidad sostenible",
+      nombre_corto: "null",
+      imagen: "null",
       presupuesto_solicitado: 8500000,
       presupuesto_concedido: 6120000.5,
       programa: "Programa de Fondos Europeos 2021-2027",
@@ -29,6 +33,8 @@ export const MOCK_DB = Object.freeze({
     {
       id: 3,
       nombre: "Digitalización de servicios municipales",
+      nombre_corto: "Ciudad digital",
+      imagen: "/mocks/noexiste.svg",
       presupuesto_solicitado: 2400000,
       presupuesto_concedido: null,
       programa: null,
