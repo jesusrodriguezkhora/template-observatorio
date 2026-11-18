@@ -7,12 +7,12 @@ export const tabs = [
       {
         columns: [
           { size: 2, widgets: ["cabecera"] },
-          { size: 1, widgets: ["informacion"] },
+          { size: 1, widgets: ["responsable"] },
         ],
       },
       {
         columns: [
-          { size: 1, widgets: ["responsable", "fechas"] },
+          { size: 1, widgets: ["informacion", "fechas"] },
           { size: 1, widgets: ["financiacion"] },
         ],
       },

@@ -23,6 +23,8 @@ export const widgets = {
     fragments: [
       { type: "info", subtitle: "Programa / plan", field: "programa" },
       { type: "info", subtitle: "Descripción", field: "descripcion" },
+      { type: "info", subtitle: "Temas", field: "temas", valueType: "chips", catalog: "temas" },
+      { type: "info", subtitle: "Subtemas", field: "subtemas", valueType: "chips", catalog: "subtemas", hideIfEmpty: true },
     ],
   },
   presupuesto: {
