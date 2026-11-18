@@ -1,15 +1,9 @@
-import FieldsTab from "./FieldsTab";
 import RelatedTab from "./RelatedTab";
 import GridTab from "./GridTab";
 import { getFragmentValueDefs } from "../fragments";
 import { getGridWidgets } from "../widgets/visibility";
 
 export const TAB_TYPES = Object.freeze({
-  fields: {
-    Panel: FieldsTab,
-    requires: ["fields"],
-    valueDefs: (tab) => tab.fields,
-  },
   related: {
     Panel: RelatedTab,
     requires: ["entity"],
