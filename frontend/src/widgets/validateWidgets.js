@@ -13,9 +13,6 @@ export function validateWidgetCatalog(catalog, where, byKey) {
   for (const [key, widget] of Object.entries(catalog)) {
     const widgetWhere = `${where}, widget "${key}"`;
 
-    if (!widget.title) {
-      errors.push(`${widgetWhere}: falta title`);
-    }
     if (!Array.isArray(widget.fragments) || widget.fragments.length === 0) {
       errors.push(`${widgetWhere}: no tiene fragmentos`);
       continue;
@@ -39,6 +36,8 @@ function validateFragment(fragment, where, byKey) {
   if (fragment.hideIfEmpty && !fragmentType.isEmpty) {
     errors.push(`${where}: el tipo "${fragment.type}" no admite hideIfEmpty`);
   }
+
+  errors.push(...(fragmentType.validate?.(fragment) ?? []).map((message) => `${where}: ${message}`));
 
   const valueDefs = fragmentType.valueDefs?.(fragment) ?? [];
   errors.push(...validateValueDefs(valueDefs, `${where}, campo`, byKey, false));
