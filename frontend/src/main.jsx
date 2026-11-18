@@ -8,10 +8,11 @@ import { THEME_CONFIG } from "./config/theme";
 import AuthProvider from "./auth/AuthProvider";
 import { ENTITY_DEFINITIONS } from "./config/entities";
 import { assertValidEntities } from "./entities/validateEntities";
+import { CATALOG_DEFINITIONS } from "./config/catalogs";
 import App from "./App.jsx";
 
 if (import.meta.env.DEV) {
-  assertValidEntities(ENTITY_DEFINITIONS);
+  assertValidEntities(ENTITY_DEFINITIONS, CATALOG_DEFINITIONS);
 }
 
 createRoot(document.getElementById("root")).render(

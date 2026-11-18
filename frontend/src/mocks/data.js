@@ -1,4 +1,23 @@
 export const MOCK_DB = Object.freeze({
+  areas: [
+    { id: 1, nombre: "Área de Urbanismo" },
+    { id: 2, nombre: "Área de Movilidad" },
+    { id: 3, nombre: "Área de Innovación" },
+  ],
+  temas: [
+    { id: 1, nombre: "Cultura", color_fondo: "#FCE4EC", color_texto: "#AD1457" },
+    { id: 2, nombre: "Medioambiente", color_fondo: "#E8F5E9", color_texto: "#2E7D32" },
+    { id: 3, nombre: "Clima", color_fondo: "#E0F7FA", color_texto: "#00838F" },
+    { id: 4, nombre: "Movilidad", color_fondo: "#FFF3E0", color_texto: "#E65100" },
+    { id: 5, nombre: "Social", color_fondo: "#F3E5F5", color_texto: "#6A1B9A" },
+    { id: 6, nombre: "Digitalización", color_fondo: "#E8EAF6", color_texto: "#283593" },
+    { id: 7, nombre: "Economía", color_fondo: "#FFFDE7", color_texto: "#827717" },
+    { id: 8, nombre: "Educación", color_fondo: "#FBE9E7", color_texto: "#BF360C" },
+  ],
+  subtemas: [
+    { id: 1, nombre: "Participación ciudadana" },
+    { id: 2, nombre: "Economía azul" },
+  ],
   proyectos: [
     {
       id: 1,
@@ -14,7 +33,9 @@ export const MOCK_DB = Object.freeze({
       presupuesto_solicitado: 19633507.15,
       presupuesto_concedido: 14270696.01,
       programa: "Programa de Fondos Europeos 2021-2027",
-      area_coordinadora: "Área de Urbanismo",
+      area: 1,
+      temas: [1, 2, 6],
+      subtemas: [1],
       responsable: "Jefatura del Servicio de Urbanismo",
       descripcion:
         "Recuperación del espacio público y del patrimonio edificado del casco histórico, priorizando la movilidad peatonal y la conservación de fachadas protegidas.",
@@ -35,7 +56,9 @@ export const MOCK_DB = Object.freeze({
       presupuesto_solicitado: 8500000,
       presupuesto_concedido: 6120000.5,
       programa: "Programa de Fondos Europeos 2021-2027",
-      area_coordinadora: "Área de Movilidad",
+      area: 2,
+      temas: [4, 3, 2],
+      subtemas: [],
       responsable: null,
       descripcion:
         "Conjunto de actuaciones para reducir el uso del vehículo privado mediante transporte público, carriles bici y aparcamientos disuasorios.",
@@ -56,7 +79,9 @@ export const MOCK_DB = Object.freeze({
       presupuesto_solicitado: 2400000,
       presupuesto_concedido: null,
       programa: null,
-      area_coordinadora: "Área de Innovación",
+      area: 3,
+      temas: [6, 7],
+      subtemas: [2],
       responsable: "Dirección de Sistemas de Información",
       descripcion: "",
       fecha_inicio: "2027-01-01",
