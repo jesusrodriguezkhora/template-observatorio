@@ -4,7 +4,14 @@ import RefCell from "./RefCell";
 import DateCell from "./DateCell";
 import CurrencyCell from "./CurrencyCell";
 import { getRefLabel } from "./helpers";
-import { formatCurrency, formatDate } from "./formatters";
+import PercentCell from "./PercentCell";
+import BooleanCell from "./BooleanCell";
+import {
+  formatBoolean,
+  formatCurrency,
+  formatDate,
+  formatPercent,
+} from "./formatters";
 import { LOCALE_CONFIG } from "../config/locale";
 
 export const DEFAULT_COLUMN_TYPE = "text";
@@ -30,6 +37,20 @@ export const COLUMN_TYPES = Object.freeze({
     Cell: CurrencyCell,
     toText: formatCurrency,
     align: "right",
+  },
+  percent: {
+    Cell: PercentCell,
+    toText: formatPercent,
+    align: "right",
+    validate: (column) =>
+      column.decimals !== undefined &&
+      !(Number.isInteger(column.decimals) && column.decimals >= 0 && column.decimals <= 20)
+        ? ['"decimals" debe ser un número entero entre 0 y 20']
+        : [],
+  },
+  boolean: {
+    Cell: BooleanCell,
+    toText: formatBoolean,
   },
 });
 
