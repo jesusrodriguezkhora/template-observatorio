@@ -1,40 +1,25 @@
 import { Link } from "@mui/material";
 import { Link as RouterLink } from "react-router";
 import { TABLE_CONFIG } from "../config/tables";
-import { getDetailPath } from "../entities/paths";
-import { getLookupRow, getRefLabel } from "./helpers";
+import { getRefLabel, getRefTarget } from "./helpers";
 
 function RefCell({ value, column, lookups }) {
   const label = getRefLabel(value, column, lookups);
-  const color = column.color ?? TABLE_CONFIG.linkColor;
+  const target = getRefTarget(value, column, lookups);
 
-  if (column.entity) {
-    return (
-      <Link
-        component={RouterLink}
-        to={getDetailPath(column.entity, value)}
-        color={color}
-        underline="hover"
-      >
-        {label}
-      </Link>
-    );
+  if (!target) {
+    return label;
   }
 
-  const source = lookups[column.catalog];
-  const href = source?.linkField
-    ? getLookupRow(lookups, column.catalog, value)?.[source.linkField]
-    : null;
+  const linkProps = target.to
+    ? { component: RouterLink, to: target.to }
+    : { href: target.href, target: "_blank", rel: "noopener noreferrer" };
 
-  if (href) {
-    return (
-      <Link href={href} target="_blank" rel="noopener noreferrer" color={color} underline="hover">
-        {label}
-      </Link>
-    );
-  }
-
-  return label;
+  return (
+    <Link {...linkProps} color={column.color ?? TABLE_CONFIG.linkColor} underline="hover">
+      {label}
+    </Link>
+  );
 }
 
 export default RefCell;
