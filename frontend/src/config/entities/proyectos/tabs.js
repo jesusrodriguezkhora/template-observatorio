@@ -12,8 +12,9 @@ export const tabs = [
       },
       {
         columns: [
-          { size: 1, widgets: ["responsable", "fechas"] },
-          { size: 2, widgets: ["informacion"] },
+          { size: 1, widgets: ["responsable"] },
+          { size: 1, widgets: ["informacion", "fechas"] },
+          { size: 1, widgets: ["financiacion"] },
         ],
       },
     ],

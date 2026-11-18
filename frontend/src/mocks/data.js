@@ -3,6 +3,9 @@ export const MOCK_DB = Object.freeze({
     {
       id: 1,
       nombre: "Rehabilitación del casco histórico",
+      feder_concedido: 8562417.61,
+      presupuesto_ejecutado: 337974.76,
+      pendiente_justificar: 14270696.01,
       nombre_corto: "Casco histórico",
       imagen: "/mocks/proyecto-1.svg",
       presupuesto_solicitado: 19633507.15,
@@ -18,6 +21,9 @@ export const MOCK_DB = Object.freeze({
     {
       id: 2,
       nombre: "Plan de movilidad sostenible",
+      feder_concedido: 3672000.3,
+      presupuesto_ejecutado: 1250000,
+      pendiente_justificar: 5320000.5,
       nombre_corto: null,
       imagen: "/mocks/proyecto-1.svg",
       presupuesto_solicitado: 8500000,
@@ -33,6 +39,9 @@ export const MOCK_DB = Object.freeze({
     {
       id: 3,
       nombre: "Digitalización de servicios municipales",
+      feder_concedido: null,
+      presupuesto_ejecutado: null,
+      pendiente_justificar: null,
       nombre_corto: "Ciudad digital",
       imagen: "/mocks/noexiste.svg",
       presupuesto_solicitado: 2400000,

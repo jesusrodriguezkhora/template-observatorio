@@ -6,7 +6,7 @@ export const WIDGET_CONFIG = Object.freeze({
   subtitleColor: "primary.main",
   keyvalue: {
     rowGap: 1,
-    labelColor: "text.secondary",
+    labelColor: "text.main",
     valueWeight: 600,
     dividers: true,
   },

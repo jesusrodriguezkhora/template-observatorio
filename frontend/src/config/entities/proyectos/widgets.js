@@ -33,10 +33,51 @@ export const widgets = {
     ],
   },
   fechas: {
-    title: "Fechas",
+    title: "Fechas y resolución",
     fragments: [
-      { type: "info", subtitle: "Fecha de inicio", field: "fecha_inicio", valueType: "date" },
-      { type: "info", subtitle: "Fecha de fin", field: "fecha_fin", valueType: "date" },
+      {
+        type: "keyvalue",
+        rows: [
+          { label: "Fecha de inicio", field: "fecha_inicio", valueType: "date" },
+          { label: "Fecha de fin", field: "fecha_fin", valueType: "date" },
+        ],
+      },
+    ],
+  },
+  financiacion: {
+    title: "Financiación",
+    fragments: [
+      {
+        type: "keyvalue",
+        rows: [
+          { label: "Presupuesto solicitado", field: "presupuesto_solicitado", valueType: "currency" },
+          {
+            label: "Presupuesto concedido",
+            field: "presupuesto_concedido",
+            valueType: "currency",
+            color: "primary.main",
+          },
+          { label: "FEDER concedido", field: "feder_concedido", valueType: "currency" },
+          {
+            label: "Ejecutado (pagado)",
+            field: "presupuesto_ejecutado",
+            valueType: "currency",
+            color: "success.main",
+          },
+        ],
+      },
+      {
+        type: "keyvalue",
+        rows: [
+          {
+            label: "Pendiente de justificar",
+            field: "pendiente_justificar",
+            valueType: "currency",
+            color: "error.main",
+            hideIfEmpty: true,
+          },
+        ],
+      },
     ],
   },
 };
