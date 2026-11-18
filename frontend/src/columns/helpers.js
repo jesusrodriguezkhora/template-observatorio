@@ -2,6 +2,16 @@ export function isEmptyValue(value) {
   return value === null || value === undefined || value === "";
 }
 
+export function getRefSourceKey(column) {
+  return column.entity ?? column.catalog;
+}
+
+export function getLookupRow(lookups, sourceKey, value) {
+  return lookups[sourceKey]?.rows[String(value)] ?? null;
+}
+
 export function getRefLabel(value, column, lookups) {
-  return lookups[column.entity]?.[String(value)] ?? value;
+  const sourceKey = getRefSourceKey(column);
+  const row = getLookupRow(lookups, sourceKey, value);
+  return row ? row[lookups[sourceKey].displayField] : value;
 }
