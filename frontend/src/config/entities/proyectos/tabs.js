@@ -17,6 +17,9 @@ export const tabs = [
           { size: 1, widgets: ["financiacion"] },
         ],
       },
+      {
+        columns: [{ widgets: ["cronograma"] }],
+      },
     ],
   },
   { key: "actuaciones", label: "Actuaciones", type: "related", entity: "actuaciones" },

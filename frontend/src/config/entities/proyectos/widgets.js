@@ -131,4 +131,17 @@ export const widgets = {
       },
     ],
   },
+  cronograma: {
+    title: "Cronograma de actuaciones",
+    fragments: [
+      {
+        type: "timeline",
+        rows: {
+          entity: "actuaciones",
+          start: "fecha_inicio",
+          end: "fecha_fin",
+        },
+      },
+    ],
+  },
 };
