@@ -108,6 +108,7 @@ export const MOCK_DB = Object.freeze({
     {
       id: 1,
       nombre: "Peatonalización de la calle Mayor",
+      presupuesto_ejecutado: 337974.76,
       estado: "En ejecución",
       presupuesto_concedido: 9160245.72,
       proyecto_id: 1,
@@ -119,6 +120,7 @@ export const MOCK_DB = Object.freeze({
     {
       id: 2,
       nombre: "Restauración de fachadas protegidas",
+      presupuesto_ejecutado: 0,
       estado: "En licitación",
       presupuesto_concedido: 1415497.43,
       proyecto_id: 1,
@@ -130,6 +132,7 @@ export const MOCK_DB = Object.freeze({
     {
       id: 3,
       nombre: "Carril bici perimetral",
+      presupuesto_ejecutado: 1000000,
       estado: "En ejecución",
       presupuesto_concedido: 2500000,
       proyecto_id: 2,
@@ -141,6 +144,7 @@ export const MOCK_DB = Object.freeze({
     {
       id: 4,
       nombre: "Ampliación de la red de autobuses",
+      presupuesto_ejecutado: 250000,
       estado: "En licitación",
       presupuesto_concedido: 1800000,
       proyecto_id: 2,
@@ -152,6 +156,7 @@ export const MOCK_DB = Object.freeze({
     {
       id: 5,
       nombre: "Aparcamientos disuasorios",
+      presupuesto_ejecutado: 0,
       estado: "Pendiente",
       presupuesto_concedido: 1200000,
       proyecto_id: 2,
