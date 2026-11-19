@@ -65,3 +65,14 @@ export function formatBoolean(value, column = {}) {
   }
   return String(value);
 }
+
+export function formatNumber(value, column = {}) {
+  const number = Number(value);
+  if (!Number.isFinite(number)) {
+    return String(value);
+  }
+  return getFormatter(Intl.NumberFormat, {
+    useGrouping: "always",
+    maximumFractionDigits: column.decimals ?? 2,
+  }).format(number);
+}

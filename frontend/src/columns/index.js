@@ -12,8 +12,10 @@ import {
 import PercentCell from "./PercentCell";
 import BooleanCell from "./BooleanCell";
 import ChipsCell from "./ChipsCell";
+import NumberCell from "./NumberCell";
 import {
   formatBoolean,
+  formatNumber,
   formatCurrency,
   formatDate,
   formatPercent,
@@ -40,6 +42,12 @@ export const COLUMN_TYPES = Object.freeze({
         ? [`el formato de fecha "${column.format}" no existe en config/locale.js`]
         : [],
   },
+  number: {
+    Cell: NumberCell,
+    toText: formatNumber,
+    align: "right",
+    numeric: true,
+  },
   currency: {
     Cell: CurrencyCell,
     toText: formatCurrency,
@@ -49,6 +57,7 @@ export const COLUMN_TYPES = Object.freeze({
     Cell: PercentCell,
     toText: formatPercent,
     align: "right",
+    numeric: true,
     validate: (column) =>
       column.decimals !== undefined &&
       !(Number.isInteger(column.decimals) && column.decimals >= 0 && column.decimals <= 20)
@@ -75,6 +84,11 @@ export function getColumnText(column, row, lookups) {
   const value = row[column.field];
   const { toText } = getColumnType(column.type);
   return toText ? toText(value, column, lookups) : value;
+}
+
+export function formatValue(value, valueType, options = {}) {
+  const { toText } = getColumnType(valueType);
+  return toText ? toText(value, options, {}) : String(value);
 }
 
 export function getColumnAlign(column) {
