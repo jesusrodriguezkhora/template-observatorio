@@ -112,7 +112,7 @@ export const widgets = {
         center: {
           field: "porcentaje_ejecucion",
           valueType: "percent",
-          caption: "ejecutado",
+          caption: "Ejecutado",
         },
       },
     ],
