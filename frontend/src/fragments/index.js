@@ -1,10 +1,12 @@
 import InfoFragment from "./InfoFragment";
-import { isEmptyValue } from "../columns/helpers";
+import { getRefSourceKey, isEmptyValue } from "../columns/helpers";
 import { toValueDef } from "./helpers";
 import TitleFragment from "./TitleFragment";
 import { resolveSlot, slotValueDefs, validateSlot } from "./slots";
 import KeyValueFragment from "./KeyValueFragment";
 import { isRowEmpty, validateRows } from "./keyvalueRows";
+import ListFragment from "./ListFragment";
+import { isListEmpty, toListValueDef, validateList } from "./listItems";
 
 const TITLE_SLOTS = ["image", "overline", "title", "subtitle"];
 
@@ -35,6 +37,17 @@ export const FRAGMENT_TYPES = Object.freeze({
       fragment.rows.every((row) => isRowEmpty(row, record)),
     validate: (fragment) =>
       fragment.rows === undefined ? [] : validateRows(fragment.rows),
+  },
+  list: {
+    Fragment: ListFragment,
+    requires: ["field"],
+    requiresOneOf: ["entity", "catalog"],
+    valueDefs: (fragment) =>
+      fragment.field && getRefSourceKey(fragment)
+        ? [toListValueDef(fragment)]
+        : [],
+    isEmpty: isListEmpty,
+    validate: validateList,
   },
 });
 
