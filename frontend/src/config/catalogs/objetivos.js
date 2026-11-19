@@ -1,4 +1,4 @@
 export const objetivos = {
   key: "objetivos",
-  displayField: "nombre",
+  displayField: "descripcion",
 };

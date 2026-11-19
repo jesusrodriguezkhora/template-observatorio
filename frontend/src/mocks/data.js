@@ -19,11 +19,11 @@ export const MOCK_DB = Object.freeze({
     { id: 2, nombre: "Economía azul", color_fondo: "#0D47A1", color_texto: "#FFFFFF" },
   ],
   objetivos: [
-    { id: 1, nombre: "OE1", descripcion: "Recuperar el espacio público del casco histórico para el peatón." },
-    { id: 2, nombre: "OE2", descripcion: "Conservar y poner en valor el patrimonio edificado protegido." },
-    { id: 3, nombre: "OE1", descripcion: "Reducir el uso del vehículo privado en los desplazamientos diarios." },
-    { id: 4, nombre: "OE2", descripcion: "Conectar los barrios periféricos con transporte público y carril bici." },
-    { id: 5, nombre: "OE3", descripcion: "Facilitar la intermodalidad mediante aparcamientos disuasorios." },
+    { id: 1, descripcion: "Recuperar el espacio público del casco histórico para el peatón." },
+    { id: 2, descripcion: "Conservar y poner en valor el patrimonio edificado protegido." },
+    { id: 3, descripcion: "Reducir el uso del vehículo privado en los desplazamientos diarios." },
+    { id: 4, descripcion: "Conectar los barrios periféricos con transporte público y carril bici." },
+    { id: 5, descripcion: "Facilitar la intermodalidad mediante aparcamientos disuasorios." },
   ],
   proyectos: [
     {

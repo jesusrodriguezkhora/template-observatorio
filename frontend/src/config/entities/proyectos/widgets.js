@@ -23,7 +23,7 @@ export const widgets = {
     fragments: [
       { type: "info", subtitle: "Programa / plan", field: "programa" },
       { type: "info", subtitle: "Descripción", field: "descripcion" },
-      { type: "list", subtitle: "Objetivos", field: "objetivos", catalog: "objetivos", badge: "nombre", text: "descripcion", hideIfEmpty: true },
+      { type: "list", subtitle: "Objetivos", field: "objetivos", catalog: "objetivos", numbering: { prefix: "OE" }, hideIfEmpty: true },
       { type: "info", subtitle: "Temas", field: "temas", valueType: "chips", catalog: "temas" },
       { type: "info", subtitle: "Subtemas", field: "subtemas", valueType: "chips", catalog: "subtemas", hideIfEmpty: true },
     ],

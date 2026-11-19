@@ -15,17 +15,25 @@ export function toListValueDef(fragment) {
   };
 }
 
+function getBadge(fragment, row, index) {
+  if (fragment.numbering) {
+    const { prefix = "", start = 1 } = fragment.numbering;
+    return `${prefix}${start + index}`;
+  }
+  return fragment.badge ? row?.[fragment.badge] : null;
+}
+
 export function getListItems(fragment, record, lookups) {
   const sourceKey = getRefSourceKey(fragment);
   const source = lookups[sourceKey];
   const ids = [...new Set(toIdList(record[fragment.field]).map(String))];
 
-  return ids.map((id) => {
+  return ids.map((id, index) => {
     const row = getLookupRow(lookups, sourceKey, id);
     const colorFields = source?.colors;
     return {
       id,
-      badge: fragment.badge ? row?.[fragment.badge] : null,
+      badge: getBadge(fragment, row, index),
       text: row ? row[fragment.text ?? source.displayField] : id,
       background: colorFields ? row?.[colorFields.background] : null,
       color: colorFields ? row?.[colorFields.text] : null,
@@ -46,6 +54,27 @@ export function validateList(fragment) {
     ) {
       errors.push(`"${option}" debe ser el nombre de un campo`);
     }
+  }
+  if (fragment.numbering !== undefined) {
+    errors.push(...validateNumbering(fragment));
+  }
+  return errors;
+}
+
+function validateNumbering(fragment) {
+  const { numbering } = fragment;
+  if (numbering === null || typeof numbering !== "object") {
+    return ['"numbering" debe ser un objeto { prefix, start }'];
+  }
+  const errors = [];
+  if (fragment.badge !== undefined) {
+    errors.push('usa "badge" o "numbering", no los dos');
+  }
+  if (numbering.prefix !== undefined && typeof numbering.prefix !== "string") {
+    errors.push('"numbering.prefix" debe ser un texto');
+  }
+  if (numbering.start !== undefined && !Number.isInteger(numbering.start)) {
+    errors.push('"numbering.start" debe ser un número entero');
   }
   return errors;
 }
