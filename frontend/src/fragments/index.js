@@ -1,6 +1,8 @@
 import InfoFragment from "./InfoFragment";
 import { getRefSourceKey, isEmptyValue } from "../columns/helpers";
 import { toValueDef } from "./helpers";
+import { isTimelineEmpty } from "../timeline/loadRows";
+import { validateTimeline } from "../timeline/validateTimeline";
 import TitleFragment from "./TitleFragment";
 import { resolveSlot, slotValueDefs, validateSlot } from "./slots";
 import KeyValueFragment from "./KeyValueFragment";
@@ -8,6 +10,7 @@ import { isRowEmpty, validateRows } from "./keyvalueRows";
 import ListFragment from "./ListFragment";
 import { isListEmpty, toListValueDef, validateList } from "./listItems";
 import ChartFragment from "./ChartFragment";
+import TimelineFragment from "./TimelineFragment";
 import { CHART_TYPES } from "../charts";
 
 const TITLE_SLOTS = ["image", "overline", "title", "subtitle"];
@@ -74,6 +77,12 @@ export const FRAGMENT_TYPES = Object.freeze({
     isEmpty: (fragment, record) =>
       CHART_TYPES[fragment.chart]?.isEmpty?.(fragment, record) ?? false,
     validate: validateChartFragment,
+  },
+  timeline: {
+    Fragment: TimelineFragment,
+    requires: ["rows"],
+    isEmpty: isTimelineEmpty,
+    validate: validateTimeline,
   },
 });
 

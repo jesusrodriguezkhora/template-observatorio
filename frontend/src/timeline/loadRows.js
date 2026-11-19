@@ -1,6 +1,6 @@
 import { getEntity } from "../entities/registry";
 import { loadRelatedRows } from "../entities/queries";
-import { getFieldRows, getRelatedRows } from "./timeline";
+import { buildTimeline, getFieldRows, getRelatedRows } from "./timeline";
 
 export function hasFieldRows(fragment) {
   return Array.isArray(fragment.rows);
@@ -23,4 +23,11 @@ export async function loadTimelineRelatedRows(fragment, entity, record) {
   );
   const { displayField } = getEntity(fragment.rows.entity);
   return getRelatedRows(fragment.rows, rows, displayField);
+}
+
+export function isTimelineEmpty(fragment, record) {
+  if (!hasFieldRows(fragment)) {
+    return false;
+  }
+  return buildTimeline(getTimelineFieldRows(fragment, record)) === null;
 }
