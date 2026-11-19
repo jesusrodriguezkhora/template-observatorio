@@ -2,6 +2,7 @@ import { Box, Typography } from "@mui/material";
 import { CHART_CONFIG } from "../config/charts";
 import { formatPercent } from "../columns/formatters";
 import { formatValue } from "../columns";
+import { COMPACT } from "../widgets/compactQuery";
 import { getItemColor } from "./colors";
 
 const { percentDecimals, swatchSize } = CHART_CONFIG.legend;
@@ -19,6 +20,7 @@ function ChartLegend({ chart, items }) {
         columnGap: 1.5,
         rowGap: 0.75,
         alignItems: "baseline",
+        [COMPACT]: { gridTemplateColumns: "auto minmax(0, 1fr)", rowGap: 0 },
       }}
     >
       {items.map((item) => (
@@ -34,32 +36,51 @@ function ChartLegend({ chart, items }) {
               alignSelf: "center",
             }}
           />
-          <Typography component="span" variant="body2">
+          <Typography
+            component="span"
+            variant="body2"
+            sx={{ overflowWrap: "anywhere" }}
+          >
             {item.label}
           </Typography>
-          <Typography
+          <Box
             component="span"
-            variant="body2"
-            sx={{ fontWeight: 600, textAlign: "right" }}
-          >
-            {item.value === null
-              ? "—"
-              : formatValue(item.value, chart.valueType, chart)}
-          </Typography>
-          <Typography
-            component="span"
-            variant="body2"
             sx={{
-              color: "text.secondary",
-              textAlign: "right",
-              minWidth: "3.5em",
+              display: "contents",
+              [COMPACT]: {
+                gridColumn: "2",
+                display: "flex",
+                flexWrap: "wrap",
+                justifyContent: "space-between",
+                columnGap: 1.5,
+                mb: 0.75,
+              },
             }}
           >
-            {formatPercent(item.share, {
-              fraction: true,
-              decimals: percentDecimals,
-            })}
-          </Typography>
+            <Typography
+              component="span"
+              variant="body2"
+              sx={{ fontWeight: 600, textAlign: "right" }}
+            >
+              {item.value === null
+                ? "—"
+                : formatValue(item.value, chart.valueType, chart)}
+            </Typography>
+            <Typography
+              component="span"
+              variant="body2"
+              sx={{
+                color: "text.secondary",
+                textAlign: "right",
+                minWidth: "3.5em",
+              }}
+            >
+              {formatPercent(item.share, {
+                fraction: true,
+                decimals: percentDecimals,
+              })}
+            </Typography>
+          </Box>
         </Box>
       ))}
     </Box>

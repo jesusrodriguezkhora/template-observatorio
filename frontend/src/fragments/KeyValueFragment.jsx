@@ -5,6 +5,7 @@ import ColumnValue from "../columns/ColumnValue";
 import FragmentSubtitle from "./FragmentSubtitle";
 import { toValueDef } from "./helpers";
 import { getVisibleRows } from "./keyvalueRows";
+import { COMPACT } from "../widgets/compactQuery";
 
 const KEYVALUE_CONFIG = WIDGET_CONFIG.keyvalue;
 
@@ -52,6 +53,11 @@ function KeyValueFragment({ fragment, entity, record, lookups }) {
               justifyContent: "space-between",
               alignItems: "baseline",
               gap: 2,
+              [COMPACT]: {
+              flexDirection: "column",
+              alignItems: "flex-start",
+              gap: 0,
+              },
             }}
           >
             <Typography
@@ -66,7 +72,10 @@ function KeyValueFragment({ fragment, entity, record, lookups }) {
               variant={WIDGET_CONFIG.textVariant}
               sx={{
                 m: 0,
+                minWidth: 0,
                 textAlign: "right",
+                overflowWrap: "anywhere",
+                [COMPACT]: { textAlign: "left" },
                 fontWeight: KEYVALUE_CONFIG.valueWeight,
                 color: row.color,
               }}

@@ -4,6 +4,7 @@ import { formatPercent } from "../columns/formatters";
 import { formatValue } from "../columns";
 import { buildGoalBars } from "./goal";
 import { getItemColor } from "./colors";
+import { COMPACT } from "../widgets/compactQuery";
 
 const GOAL = CHART_CONFIG.goal;
 
@@ -22,6 +23,7 @@ function GoalBar({ bar, chart }) {
           alignItems: "baseline",
           gap: 2,
           mb: 0.5,
+          [COMPACT]: { flexDirection: "column", gap: 0 },
         }}
       >
         <Typography

@@ -19,7 +19,7 @@ function Widget({ widget, entity, record, lookups, grow = false }) {
       component={widget.title ? "section" : "div"}
       variant="outlined"
       aria-labelledby={widget.title ? titleId : undefined}
-      sx={{ borderRadius: WIDGET_CONFIG.borderRadius, p: WIDGET_CONFIG.padding, flexGrow: grow ? 1 : 0 }}
+      sx={{ borderRadius: WIDGET_CONFIG.borderRadius, p: WIDGET_CONFIG.padding, flexGrow: grow ? 1 : 0, container: "widget / inline-size" }}
     >
       {widget.title && (
         <Typography
