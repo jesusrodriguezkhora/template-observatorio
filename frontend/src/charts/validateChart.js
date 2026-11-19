@@ -67,3 +67,23 @@ export function validateDistribution(chart) {
   }
   return errors;
 }
+
+export function validateDonut(chart) {
+  const errors = validateDistribution(chart);
+  if (chart.center !== undefined) {
+    const { center } = chart;
+    if (
+      center === null ||
+      typeof center !== "object" ||
+      typeof center.field !== "string"
+    ) {
+      errors.push('"center" debe ser { field, valueType, caption }');
+    } else if (
+      center.valueType !== undefined &&
+      !COLUMN_TYPES[center.valueType]?.numeric
+    ) {
+      errors.push('"center.valueType" debe ser un tipo numérico');
+    }
+  }
+  return errors;
+}

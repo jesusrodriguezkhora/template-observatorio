@@ -1,9 +1,9 @@
-import { Alert, Box, Stack, Tooltip, Typography } from "@mui/material";
+import { Box, Tooltip, Typography } from "@mui/material";
 import { CHART_CONFIG } from "../config/charts";
 import { formatPercent } from "../columns/formatters";
 import { formatValue } from "../columns";
 import ChartLegend from "./ChartLegend";
-import DistributionData from "./DistributionData";
+import DistributionFrame from "./DistributionFrame";
 import { getItemColor } from "./colors";
 
 const BAR = CHART_CONFIG.bar;
@@ -71,23 +71,14 @@ function Bar({ chart, items }) {
 
 function BarChart({ chart, entity, record }) {
   return (
-    <DistributionData chart={chart} entity={entity} record={record}>
-      {(distribution) =>
-        distribution === null ? (
-          <Typography>—</Typography>
-        ) : (
-          <Stack spacing={1.5}>
-            {distribution.overflow && (
-              <Alert severity="warning" variant="outlined" sx={{ py: 0 }}>
-                Las partes suman más que el total.
-              </Alert>
-            )}
-            <Bar chart={chart} items={distribution.items} />
-            <ChartLegend chart={chart} items={distribution.items} />
-          </Stack>
-        )
-      }
-    </DistributionData>
+    <DistributionFrame chart={chart} entity={entity} record={record}>
+      {(distribution) => (
+        <>
+          <Bar chart={chart} items={distribution.items} />
+          <ChartLegend chart={chart} items={distribution.items} />
+        </>
+      )}
+    </DistributionFrame>
   );
 }
 

@@ -1,5 +1,6 @@
 import BarChart from "./BarChart";
-import { validateDistribution } from "./validateChart";
+import DonutChart from "./DonutChart";
+import { validateDistribution, validateDonut } from "./validateChart";
 import { hasFieldParts, getChartFieldParts } from "./loadParts";
 import { buildChartDistribution } from "./buildChartDistribution";
 
@@ -19,5 +20,11 @@ export const CHART_TYPES = Object.freeze({
     requires: ["parts"],
     isEmpty: isDistributionEmpty,
     validate: validateDistribution,
+  },
+  donut: {
+    Chart: DonutChart,
+    requires: ["parts"],
+    isEmpty: isDistributionEmpty,
+    validate: validateDonut,
   },
 });
