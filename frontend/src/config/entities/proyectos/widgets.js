@@ -48,6 +48,26 @@ export const widgets = {
       },
     ],
   },
+  avance: {
+    title: "Avance del plan",
+    fragments: [
+      {
+        type: "chart",
+        chart: "bar",
+        subtitle: "Nº de actuaciones por estado",
+        total: "actuaciones_total",
+        valueType: "number",
+        showValues: "value",
+        parts: [
+          { label: "Finalizadas", field: "actuaciones_finalizadas" },
+          { label: "En ejecución", field: "actuaciones_en_ejecucion" },
+          { label: "En licitación", field: "actuaciones_en_licitacion" },
+          { label: "Pendientes", field: "actuaciones_pendientes" },
+        ],
+        hideIfEmpty: true,
+      },
+    ],
+  },
   financiacion: {
     title: "Financiación",
     fragments: [
@@ -73,6 +93,16 @@ export const widgets = {
           { label: "% Cofinanciación", field: "porcentaje_cofinanciacion", valueType: "percent" },
           { label: "% Ejecución", field: "porcentaje_ejecucion", valueType: "percent" },
         ],
+      },
+      {
+        type: "chart",
+        chart: "bar",
+        subtitle: "Reparto del concedido por actuación",
+        total: "presupuesto_concedido",
+        valueType: "currency",
+        showValues: "percent",
+        remainderLabel: "Sin asignar",
+        parts: { entity: "actuaciones", value: "presupuesto_concedido" },
       },
     ],
   },

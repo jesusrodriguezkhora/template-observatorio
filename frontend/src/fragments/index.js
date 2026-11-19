@@ -7,8 +7,27 @@ import KeyValueFragment from "./KeyValueFragment";
 import { isRowEmpty, validateRows } from "./keyvalueRows";
 import ListFragment from "./ListFragment";
 import { isListEmpty, toListValueDef, validateList } from "./listItems";
+import ChartFragment from "./ChartFragment";
+import { CHART_TYPES } from "../charts";
 
 const TITLE_SLOTS = ["image", "overline", "title", "subtitle"];
+
+function validateChartFragment(fragment) {
+  if (fragment.chart === undefined) {
+    return [];
+  }
+  const chartType = CHART_TYPES[fragment.chart];
+  if (!chartType) {
+    return [`el tipo de gráfico "${fragment.chart}" no existe`];
+  }
+  const missing = (chartType.requires ?? [])
+    .filter((option) => fragment[option] === undefined)
+    .map(
+      (option) =>
+        `el gráfico "${fragment.chart}" necesita la opción "${option}"`,
+    );
+  return [...missing, ...(chartType.validate?.(fragment) ?? [])];
+}
 
 export const FRAGMENT_TYPES = Object.freeze({
   info: {
@@ -48,6 +67,13 @@ export const FRAGMENT_TYPES = Object.freeze({
         : [],
     isEmpty: isListEmpty,
     validate: validateList,
+  },
+  chart: {
+    Fragment: ChartFragment,
+    requires: ["chart"],
+    isEmpty: (fragment, record) =>
+      CHART_TYPES[fragment.chart]?.isEmpty?.(fragment, record) ?? false,
+    validate: validateChartFragment,
   },
 });
 

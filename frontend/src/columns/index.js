@@ -52,6 +52,7 @@ export const COLUMN_TYPES = Object.freeze({
     Cell: CurrencyCell,
     toText: formatCurrency,
     align: "right",
+    numeric: true,
   },
   percent: {
     Cell: PercentCell,

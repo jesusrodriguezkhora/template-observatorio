@@ -62,3 +62,25 @@ export function buildDistribution(parts, totalValue, options = {}) {
 
   return { total, assigned, items, overflow: remainder < -tolerance };
 }
+
+export function foldParts(parts, maxParts, otherLabel) {
+  if (parts.length <= maxParts) {
+    return parts;
+  }
+  const kept = parts.slice(0, maxParts - 1);
+  const folded = parts.slice(maxParts - 1);
+  const otherValue = folded.reduce(
+    (sum, part) => sum + Math.max(part.value ?? 0, 0),
+    0,
+  );
+  return [
+    ...kept,
+    {
+      key: "__other",
+      label: otherLabel,
+      value: otherValue,
+      color: null,
+      slot: maxParts - 1,
+    },
+  ];
+}
