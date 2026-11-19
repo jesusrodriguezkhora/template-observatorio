@@ -101,6 +101,20 @@ export const widgets = {
         remainderLabel: "Sin asignar",
         parts: { entity: "actuaciones", value: "presupuesto_concedido" },
       },
+      {
+        type: "chart",
+        chart: "donut",
+        subtitle: "Ejecución por actuación",
+        total: "presupuesto_concedido",
+        valueType: "currency",
+        remainderLabel: "Pendiente de ejecutar",
+        parts: { entity: "actuaciones", value: "presupuesto_ejecutado" },
+        center: {
+          field: "porcentaje_ejecucion",
+          valueType: "percent",
+          caption: "ejecutado",
+        },
+      },
     ],
   },
 };

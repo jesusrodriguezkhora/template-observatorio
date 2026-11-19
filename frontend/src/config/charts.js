@@ -13,6 +13,11 @@ export const CHART_CONFIG = Object.freeze({
     labelMinShare: 0.08,
     labelColor: "common.white",
   },
+  donut: {
+    size: 140,
+    thickness: 18,
+    centerVariant: "h5",
+  },
   legend: {
     percentDecimals: 0,
     swatchSize: 10,
