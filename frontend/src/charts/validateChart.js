@@ -87,3 +87,30 @@ export function validateDonut(chart) {
   }
   return errors;
 }
+
+export function validateGoal(chart) {
+  const errors = [];
+  if (chart.target !== undefined && typeof chart.target !== "string") {
+    errors.push('"target" debe ser el nombre de un campo');
+  }
+  if (chart.bars !== undefined) {
+    if (!Array.isArray(chart.bars) || chart.bars.length === 0) {
+      errors.push('"bars" debe ser una lista no vacía');
+    } else {
+      chart.bars.forEach((bar, index) => {
+        if (!bar?.label || !bar?.field) {
+          errors.push(`barra ${index + 1}: necesita "label" y "field"`);
+        }
+      });
+    }
+  }
+  if (
+    chart.valueType !== undefined &&
+    !COLUMN_TYPES[chart.valueType]?.numeric
+  ) {
+    errors.push(
+      `"valueType" debe ser un tipo numérico (number, currency o percent)`,
+    );
+  }
+  return errors;
+}

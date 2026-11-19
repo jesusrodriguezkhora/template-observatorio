@@ -1,8 +1,14 @@
 import BarChart from "./BarChart";
 import DonutChart from "./DonutChart";
-import { validateDistribution, validateDonut } from "./validateChart";
+import GoalChart from "./GoalChart";
+import {
+  validateDistribution,
+  validateDonut,
+  validateGoal,
+} from "./validateChart";
 import { hasFieldParts, getChartFieldParts } from "./loadParts";
 import { buildChartDistribution } from "./buildChartDistribution";
+import { getGoalTarget } from "./goal";
 
 function isDistributionEmpty(chart, record) {
   if (!hasFieldParts(chart)) {
@@ -26,5 +32,11 @@ export const CHART_TYPES = Object.freeze({
     requires: ["parts"],
     isEmpty: isDistributionEmpty,
     validate: validateDonut,
+  },
+  goal: {
+    Chart: GoalChart,
+    requires: ["target", "bars"],
+    isEmpty: (chart, record) => getGoalTarget(chart, record) === null,
+    validate: validateGoal,
   },
 });
