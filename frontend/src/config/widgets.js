@@ -11,6 +11,13 @@ export const WIDGET_CONFIG = Object.freeze({
     valueWeight: 600,
     dividers: true,
   },
+  list: {
+    itemGap: 1.25,
+    badgeBackground: "primary.main",
+    badgeText: "primary.contrastText",
+    badgeRadius: 1,
+    badgeMinWidth: 40,
+  },
   title: {
     imageWidth: "30%",
     imageAspectRatio: "16 / 10",
