@@ -29,11 +29,6 @@ export const MOCK_DB = Object.freeze({
     {
       id: 1,
       nombre: "Rehabilitación del casco histórico",
-      actuaciones_total: 2,
-      actuaciones_finalizadas: 0,
-      actuaciones_en_ejecucion: 1,
-      actuaciones_en_licitacion: 1,
-      actuaciones_pendientes: 0,
       presupuesto_adjudicado: 870000,
       presupuesto_declarado: 0,
       objetivos: [1,2],
@@ -60,11 +55,6 @@ export const MOCK_DB = Object.freeze({
     {
       id: 2,
       nombre: "Plan de movilidad sostenible",
-      actuaciones_total: 3,
-      actuaciones_finalizadas: 0,
-      actuaciones_en_ejecucion: 1,
-      actuaciones_en_licitacion: 1,
-      actuaciones_pendientes: 1,
       presupuesto_adjudicado: 2100000,
       presupuesto_declarado: 450000,
       objetivos: [3, 4, 5],
@@ -91,11 +81,6 @@ export const MOCK_DB = Object.freeze({
     {
       id: 3,
       nombre: "Digitalización de servicios municipales",
-      actuaciones_total: 0,
-      actuaciones_finalizadas: 0,
-      actuaciones_en_ejecucion: 0,
-      actuaciones_en_licitacion: 0,
-      actuaciones_pendientes: 0,
       presupuesto_adjudicado: null,
       presupuesto_declarado: null,
       objetivos: [],
@@ -123,7 +108,8 @@ export const MOCK_DB = Object.freeze({
     {
       id: 1,
       nombre: "Peatonalización de la calle Mayor",
-      
+      estado: "En ejecución",
+      presupuesto_concedido: 9160245.72,
       proyecto_id: 1,
       ubicacion: "Calle Mayor",
       descripcion: "Eliminación del tráfico rodado y renovación del pavimento.",
@@ -133,6 +119,7 @@ export const MOCK_DB = Object.freeze({
     {
       id: 2,
       nombre: "Restauración de fachadas protegidas",
+      estado: "En licitación",
       presupuesto_concedido: 1415497.43,
       proyecto_id: 1,
       ubicacion: "Casco histórico",
@@ -143,6 +130,7 @@ export const MOCK_DB = Object.freeze({
     {
       id: 3,
       nombre: "Carril bici perimetral",
+      estado: "En ejecución",
       presupuesto_concedido: 2500000,
       proyecto_id: 2,
       ubicacion: "Ronda exterior",
@@ -153,6 +141,7 @@ export const MOCK_DB = Object.freeze({
     {
       id: 4,
       nombre: "Ampliación de la red de autobuses",
+      estado: "En licitación",
       presupuesto_concedido: 1800000,
       proyecto_id: 2,
       ubicacion: "Término municipal",
@@ -163,6 +152,7 @@ export const MOCK_DB = Object.freeze({
     {
       id: 5,
       nombre: "Aparcamientos disuasorios",
+      estado: "Pendiente",
       presupuesto_concedido: 1200000,
       proyecto_id: 2,
       ubicacion: null,
