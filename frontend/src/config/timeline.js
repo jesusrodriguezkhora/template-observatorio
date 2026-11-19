@@ -8,6 +8,7 @@ export const TIMELINE_CONFIG = Object.freeze({
   barMinWidth: 4,
   background: "action.hover",
   backgroundRadius: 2,
+  yearBand: "action.selected",
   axisVariant: "caption",
   labelVariant: "body2",
   noDatesLabel: "Sin fechas",

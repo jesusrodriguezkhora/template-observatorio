@@ -70,17 +70,35 @@ function YearAxis({ years, gridRow }) {
   );
 }
 
-function PlotBackground({ firstRow, rowCount }) {
+function PlotBackground({ years, firstRow, rowCount }) {
   return (
     <Box
       aria-hidden="true"
       sx={{
         gridColumn: 2,
         gridRow: `${firstRow} / span ${rowCount}`,
+        position: "relative",
+        overflow: "hidden",
         bgcolor: CONFIG.background,
         borderRadius: CONFIG.backgroundRadius,
       }}
-    />
+    >
+      {years.map(({ year, left, width }, index) =>
+        index % 2 === 0 ? (
+          <Box
+            key={year}
+            sx={{
+              position: "absolute",
+              top: 0,
+              bottom: 0,
+              left: toPercent(left),
+              width: toPercent(width),
+              bgcolor: CONFIG.yearBand,
+            }}
+          />
+        ) : null,
+      )}
+    </Box>
   );
 }
 
@@ -166,7 +184,11 @@ function Timeline({ timeline, today = null }) {
       >
         {showToday && <TodayLabel position={todayPosition} />}
         <YearAxis years={years} gridRow={axisRow} />
-        <PlotBackground firstRow={firstRow} rowCount={rows.length} />
+        <PlotBackground
+          years={years}
+          firstRow={firstRow}
+          rowCount={rows.length}
+        />
         {rows.map((row, index) => (
           <Typography
             key={`label-${row.key}`}
