@@ -102,6 +102,7 @@ export const MOCK_DB = Object.freeze({
     {
       id: 1,
       nombre: "Peatonalización de la calle Mayor",
+      
       proyecto_id: 1,
       ubicacion: "Calle Mayor",
       descripcion: "Eliminación del tráfico rodado y renovación del pavimento.",
@@ -111,6 +112,7 @@ export const MOCK_DB = Object.freeze({
     {
       id: 2,
       nombre: "Restauración de fachadas protegidas",
+      presupuesto_concedido: 1415497.43,
       proyecto_id: 1,
       ubicacion: "Casco histórico",
       descripcion: null,
@@ -120,6 +122,7 @@ export const MOCK_DB = Object.freeze({
     {
       id: 3,
       nombre: "Carril bici perimetral",
+      presupuesto_concedido: 2500000,
       proyecto_id: 2,
       ubicacion: "Ronda exterior",
       descripcion: "Carril bici segregado que conecta los barrios periféricos.",
@@ -129,6 +132,7 @@ export const MOCK_DB = Object.freeze({
     {
       id: 4,
       nombre: "Ampliación de la red de autobuses",
+      presupuesto_concedido: 1800000,
       proyecto_id: 2,
       ubicacion: "Término municipal",
       descripcion: "Dos líneas nuevas y renovación de marquesinas.",
@@ -138,6 +142,7 @@ export const MOCK_DB = Object.freeze({
     {
       id: 5,
       nombre: "Aparcamientos disuasorios",
+      presupuesto_concedido: 1200000,
       proyecto_id: 2,
       ubicacion: null,
       descripcion: null,

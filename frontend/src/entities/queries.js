@@ -85,7 +85,7 @@ export async function loadDetailData(entityKey, id, valueDefs) {
   return { record, lookups, trail };
 }
 
-async function loadRelatedRows(fromKey, id, toKey) {
+export async function loadRelatedRows(fromKey, id, toKey) {
   const path = getRelationPath(fromKey, toKey);
   if (!path) {
     throw new Error(`"${toKey}" no está relacionado con "${fromKey}"`);
