@@ -18,10 +18,18 @@ export const MOCK_DB = Object.freeze({
     { id: 1, nombre: "Participación ciudadana", color_fondo: "#8256cd", color_texto: "#FFFFFF" },
     { id: 2, nombre: "Economía azul", color_fondo: "#0D47A1", color_texto: "#FFFFFF" },
   ],
+  objetivos: [
+    { id: 1, nombre: "OE1", descripcion: "Recuperar el espacio público del casco histórico para el peatón." },
+    { id: 2, nombre: "OE2", descripcion: "Conservar y poner en valor el patrimonio edificado protegido." },
+    { id: 3, nombre: "OE1", descripcion: "Reducir el uso del vehículo privado en los desplazamientos diarios." },
+    { id: 4, nombre: "OE2", descripcion: "Conectar los barrios periféricos con transporte público y carril bici." },
+    { id: 5, nombre: "OE3", descripcion: "Facilitar la intermodalidad mediante aparcamientos disuasorios." },
+  ],
   proyectos: [
     {
       id: 1,
       nombre: "Rehabilitación del casco histórico",
+      objetivos: [1,2],
       porcentaje_cofinanciacion: 60,
       iva_financiable: 1,
       porcentaje_ejecucion: 2.37,
@@ -45,6 +53,7 @@ export const MOCK_DB = Object.freeze({
     {
       id: 2,
       nombre: "Plan de movilidad sostenible",
+      objetivos: [3, 4, 5],
       porcentaje_cofinanciacion: 60,
       iva_financiable: 0,
       porcentaje_ejecucion: 20.42,
@@ -68,6 +77,7 @@ export const MOCK_DB = Object.freeze({
     {
       id: 3,
       nombre: "Digitalización de servicios municipales",
+      objetivos: [],
       porcentaje_cofinanciacion: null,
       iva_financiable: null,
       porcentaje_ejecucion: null,
