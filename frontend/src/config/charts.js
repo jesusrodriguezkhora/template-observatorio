@@ -18,6 +18,13 @@ export const CHART_CONFIG = Object.freeze({
     thickness: 18,
     centerVariant: "h5",
   },
+  goal: {
+    barHeight: 8,
+    barRadius: 4,
+    rowGap: 1.5,
+    labelVariant: "body2",
+    targetLabel: "del total",
+  },
   legend: {
     percentDecimals: 0,
     swatchSize: 10,
