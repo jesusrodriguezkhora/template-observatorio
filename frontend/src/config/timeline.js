@@ -6,13 +6,15 @@ export const TIMELINE_CONFIG = Object.freeze({
   barHeight: 14,
   barRadius: 7,
   barMinWidth: 4,
-  yearBand: "action.hover",
+  background: "action.hover",
+  backgroundRadius: 2,
   axisVariant: "caption",
   labelVariant: "body2",
   noDatesLabel: "Sin fechas",
   today: {
     label: "Hoy",
     color: "text.primary",
-    width: 2,
+    width: 3,
+    edge: 0.03,
   },
 });
