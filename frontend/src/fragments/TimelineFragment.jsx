@@ -1,5 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { WIDGET_CONFIG } from "../config/widgets";
+import { TIMELINE_CONFIG } from "../config/timeline";
 import Timeline from "../timeline/Timeline";
 import TimelineData from "../timeline/TimelineData";
 import { getToday } from "../timeline/timeline";
@@ -12,7 +13,7 @@ function TimelineFragment({ fragment, entity, record }) {
       {fragment.subtitle && (
         <FragmentSubtitle>{fragment.subtitle}</FragmentSubtitle>
       )}
-      <Box sx={{ mt: fragment.subtitle ? 1 : 0 }}>
+      <Box sx={{ mt: fragment.subtitle ? TIMELINE_CONFIG.subtitleGap : 0 }}>
         <TimelineData fragment={fragment} entity={entity} record={record}>
           {(timeline) =>
             timeline === null ? (

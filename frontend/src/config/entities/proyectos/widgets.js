@@ -136,6 +136,7 @@ export const widgets = {
     fragments: [
       {
         type: "timeline",
+        subtitle: "Actuaciones",
         showToday: true,
         rows: {
           entity: "actuaciones",

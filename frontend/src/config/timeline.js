@@ -1,5 +1,6 @@
 export const TIMELINE_CONFIG = Object.freeze({
   minWidth: 560,
+  subtitleGap: 0,
   labelColumn: "minmax(160px, 30%)",
   columnGap: 2,
   rowHeight: 36,
