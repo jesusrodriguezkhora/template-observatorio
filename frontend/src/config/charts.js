@@ -4,6 +4,7 @@ export const CHART_CONFIG = Object.freeze({
     dark: ["#3987e5", "#d95926", "#199e70", "#c98500", "#d55181", "#0ca30c", "#9085e9", "#e66767"],
   },
   otherLabel: "Otros",
+  emptyGroupLabel: "Sin valor",
   remainderColor: "action.disabledBackground",
   segmentGap: 2,
   bar: {

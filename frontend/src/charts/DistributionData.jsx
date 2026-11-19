@@ -3,6 +3,7 @@ import { useAsyncData } from "../hooks/useAsyncData";
 import { buildChartDistribution } from "./buildChartDistribution";
 import {
   getChartFieldParts,
+  getRowPartsKey,
   hasFieldParts,
   loadChartRowParts,
 } from "./loadParts";
@@ -14,7 +15,7 @@ function FieldDistribution({ chart, record, children }) {
 
 function RowDistribution({ chart, entity, record, children }) {
   const { data, loading, error } = useAsyncData(
-    `chart/${entity.key}/${record.id}/${chart.parts.entity}/${chart.parts.value}`,
+    `chart/${entity.key}/${record.id}/${getRowPartsKey(chart)}`,
     () => loadChartRowParts(chart, entity, record),
   );
 
