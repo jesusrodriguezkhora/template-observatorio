@@ -2,6 +2,7 @@ import { Box, Tooltip, Typography } from "@mui/material";
 import { TIMELINE_CONFIG } from "../config/timeline";
 import { formatDate } from "../columns/formatters";
 import { MAX_SERIES } from "../charts/colors";
+import { getTimePosition } from "./timeline";
 
 const CONFIG = TIMELINE_CONFIG;
 
@@ -68,6 +69,59 @@ function YearBands({ years, rowCount }) {
   );
 }
 
+function TodayLine({ position, rowCount }) {
+  return (
+    <Box
+      aria-hidden="true"
+      sx={{
+        gridColumn: 2,
+        gridRow: `2 / span ${rowCount}`,
+        position: "relative",
+        zIndex: 1,
+        pointerEvents: "none",
+      }}
+    >
+      <Box
+        sx={{
+          position: "absolute",
+          top: 0,
+          bottom: 0,
+          left: toPercent(position),
+          width: CONFIG.today.width,
+          transform: "translateX(-50%)",
+          bgcolor: CONFIG.today.color,
+        }}
+      />
+    </Box>
+  );
+}
+
+function TodayLegend() {
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "flex-end",
+        alignItems: "center",
+        gap: 0.75,
+        mb: 0.5,
+      }}
+    >
+      <Box
+        aria-hidden="true"
+        sx={{
+          width: CONFIG.today.width,
+          height: 14,
+          bgcolor: CONFIG.today.color,
+        }}
+      />
+      <Typography variant={CONFIG.axisVariant} sx={{ color: "text.secondary" }}>
+        {CONFIG.today.label}
+      </Typography>
+    </Box>
+  );
+}
+
 function TimelineBar({ row, index }) {
   return (
     <Box
@@ -102,11 +156,13 @@ function TimelineBar({ row, index }) {
   );
 }
 
-function Timeline({ timeline }) {
+function Timeline({ timeline, today = null }) {
   const { years, rows } = timeline;
+  const todayPosition = getTimePosition(timeline, today);
 
   return (
     <Box sx={{ overflowX: "auto" }}>
+      {todayPosition !== null && <TodayLegend />}
       <Box
         sx={{
           display: "grid",
@@ -135,6 +191,9 @@ function Timeline({ timeline }) {
         {rows.map((row, index) => (
           <TimelineBar key={`bar-${row.key}`} row={row} index={index} />
         ))}
+        {todayPosition !== null && (
+          <TodayLine position={todayPosition} rowCount={rows.length} />
+        )}
       </Box>
     </Box>
   );

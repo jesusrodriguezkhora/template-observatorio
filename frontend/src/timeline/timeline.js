@@ -14,6 +14,17 @@ export function toTime(value) {
   return Number.isFinite(time) ? time : null;
 }
 
+export function getToday(now = new Date()) {
+  return Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
+}
+
+export function getTimePosition(timeline, time) {
+  if (time === null || time < timeline.start || time >= timeline.end) {
+    return null;
+  }
+  return (time - timeline.start) / (timeline.end - timeline.start);
+}
+
 function yearStart(year) {
   return Date.UTC(year, 0, 1);
 }

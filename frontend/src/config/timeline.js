@@ -10,4 +10,9 @@ export const TIMELINE_CONFIG = Object.freeze({
   axisVariant: "caption",
   labelVariant: "body2",
   noDatesLabel: "Sin fechas",
+  today: {
+    label: "Hoy",
+    color: "text.primary",
+    width: 2,
+  },
 });

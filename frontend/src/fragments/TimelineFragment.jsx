@@ -2,9 +2,11 @@ import { Box, Typography } from "@mui/material";
 import { WIDGET_CONFIG } from "../config/widgets";
 import Timeline from "../timeline/Timeline";
 import TimelineData from "../timeline/TimelineData";
+import { getToday } from "../timeline/timeline";
 import FragmentSubtitle from "./FragmentSubtitle";
 
 function TimelineFragment({ fragment, entity, record }) {
+  const today = fragment.showToday ? getToday() : null;
   return (
     <Box>
       {fragment.subtitle && (
@@ -16,7 +18,7 @@ function TimelineFragment({ fragment, entity, record }) {
             timeline === null ? (
               <Typography variant={WIDGET_CONFIG.textVariant}>—</Typography>
             ) : (
-              <Timeline timeline={timeline} />
+              <Timeline timeline={timeline} today={today} />
             )
           }
         </TimelineData>

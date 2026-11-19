@@ -27,8 +27,7 @@ function validateRelatedRows(rows) {
   return errors;
 }
 
-export function validateTimeline(fragment) {
-  const { rows } = fragment;
+function validateRows(rows) {
   if (rows === undefined) {
     return [];
   }
@@ -41,4 +40,15 @@ export function validateTimeline(fragment) {
   return [
     '"rows" debe ser una lista de { label, start, end } o { entity, start, end }',
   ];
+}
+
+export function validateTimeline(fragment) {
+  const errors = validateRows(fragment.rows);
+  if (
+    fragment.showToday !== undefined &&
+    typeof fragment.showToday !== "boolean"
+  ) {
+    errors.push('"showToday" debe ser true o false');
+  }
+  return errors;
 }
