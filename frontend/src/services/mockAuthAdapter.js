@@ -44,3 +44,7 @@ export async function getSession() {
   const user = MOCK_USERS.find((candidate) => String(candidate.id) === id);
   return respond(user ? toPublicUser(user) : null);
 }
+
+export async function requestPasswordReset(_email) {
+  return respond(null);
+}

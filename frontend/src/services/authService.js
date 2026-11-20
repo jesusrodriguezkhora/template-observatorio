@@ -11,3 +11,7 @@ export function logout() {
 export function getSession() {
   return adapter.getSession();
 }
+
+export function requestPasswordReset(email) {
+  return adapter.requestPasswordReset(email);
+}
