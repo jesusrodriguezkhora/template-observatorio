@@ -1,11 +1,16 @@
 import { Routes, Route, Navigate } from "react-router";
 import { MUNICIPALITY } from "./config/municipality";
-import { HOME_PATH, LOGIN_PATH } from "./config/navigation";
+import {
+  HOME_PATH,
+  LOGIN_PATH,
+  PASSWORD_RESET_PATH,
+} from "./config/navigation";
 import { getAllEntities } from "./entities/registry";
 import AppLayout from "./layout/AppLayout";
 import RequireAuth from "./auth/RequireAuth";
 import GuestOnly from "./auth/GuestOnly";
 import LoginPage from "./login/LoginPage";
+import PasswordResetPage from "./login/PasswordResetPage";
 import EntityBrowser from "./components/entity/EntityBrowser";
 import EntityDetail from "./components/entity/EntityDetail";
 
@@ -19,6 +24,7 @@ function App() {
       <Routes>
         <Route element={<GuestOnly />}>
           <Route path={LOGIN_PATH} element={<LoginPage />} />
+          <Route path={PASSWORD_RESET_PATH} element={<PasswordResetPage />} />
         </Route>
         <Route element={<RequireAuth />}>
           <Route element={<AppLayout />}>
