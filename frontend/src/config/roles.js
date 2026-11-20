@@ -5,8 +5,6 @@ export const ROLES = Object.freeze({
 
 export const SUPER_ROLE = ROLES.ADMINISTRACION;
 
-export const DEFAULT_ROLE = ROLES.ADMINISTRACION;
-
 export const ROLE_LABELS = Object.freeze({
   [ROLES.ADMINISTRACION]: "Administración",
   [ROLES.CONSULTA]: "Consulta",
