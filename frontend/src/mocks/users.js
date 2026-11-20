@@ -10,9 +10,16 @@ export const MOCK_USERS = [
   },
   {
     id: 2,
-    nombre: "Usuario de consulta",
-    email: "consulta@ejemplo.es",
-    role: ROLES.CONSULTA,
+    nombre: "Gestión",
+    email: "gestion@ejemplo.es",
+    role: ROLES.GESTION,
+    password: "observatorio",
+  },
+  {
+    id: 3,
+    nombre: "Político",
+    email: "politico@ejemplo.es",
+    role: ROLES.POLITICO,
     password: "observatorio",
   },
 ];

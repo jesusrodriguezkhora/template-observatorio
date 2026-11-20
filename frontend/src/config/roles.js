@@ -1,11 +1,13 @@
 export const ROLES = Object.freeze({
   ADMINISTRACION: "administracion",
-  CONSULTA: "consulta",
+  GESTION: "gestion",
+  POLITICO: "politico"
 });
 
 export const SUPER_ROLE = ROLES.ADMINISTRACION;
 
 export const ROLE_LABELS = Object.freeze({
   [ROLES.ADMINISTRACION]: "Administración",
-  [ROLES.CONSULTA]: "Consulta",
+  [ROLES.GESTION]: "Gestión",
+  [ROLES.POLITICO]: "Político",
 });
