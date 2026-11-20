@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link as RouterLink } from "react-router";
 import {
   Alert,
@@ -25,6 +25,8 @@ function LoginForm() {
   const [fieldErrors, setFieldErrors] = useState({});
   const [formError, setFormError] = useState(null);
   const [submitting, setSubmitting] = useState(false);
+  const emailRef = useRef(null);
+  const passwordRef = useRef(null);
 
   function handleChange(setter, field) {
     return (event) => {
@@ -41,7 +43,12 @@ function LoginForm() {
       password: validatePassword(password),
     };
     setFieldErrors(errors);
-    if (errors.email || errors.password) {
+    if (errors.email) {
+      emailRef.current.focus();
+      return;
+    }
+    if (errors.password) {
+      passwordRef.current.focus();
       return;
     }
 
@@ -69,6 +76,7 @@ function LoginForm() {
           autoComplete="username"
           autoFocus
           fullWidth
+          inputRef={emailRef}
           value={email}
           onChange={handleChange(setEmail, "email")}
           error={Boolean(fieldErrors.email)}
@@ -81,6 +89,7 @@ function LoginForm() {
           type={showPassword ? "text" : "password"}
           autoComplete="current-password"
           fullWidth
+          inputRef={passwordRef}
           value={password}
           onChange={handleChange(setPassword, "password")}
           error={Boolean(fieldErrors.password)}

@@ -2,7 +2,7 @@ import { createTheme } from "@mui/material/styles";
 import { THEME_CONFIG } from "../config/theme";
 import { CHART_CONFIG } from "../config/charts";
 
-const { colors, fontFamily, allowDarkMode } = THEME_CONFIG;
+const { colors, fontFamily, buttonTextTransform, allowDarkMode } = THEME_CONFIG;
 
 function chartPalette(colors) {
   return Object.fromEntries(
@@ -28,5 +28,8 @@ export const appTheme = createTheme({
       dark: paletteFrom(colors.dark, CHART_CONFIG.palette.dark),
     }),
   },
-  typography: { fontFamily },
+  typography: {
+    fontFamily,
+    button: { textTransform: buttonTextTransform },
+  },
 });

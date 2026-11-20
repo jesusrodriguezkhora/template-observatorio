@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link as RouterLink } from "react-router";
 import { Alert, Box, Button, Link, Stack, TextField } from "@mui/material";
 import { requestPasswordReset } from "../services/authService";
@@ -28,6 +28,7 @@ function PasswordResetForm() {
   const [formError, setFormError] = useState(null);
   const [submitting, setSubmitting] = useState(false);
   const [sent, setSent] = useState(false);
+  const emailRef = useRef(null);
 
   function handleChange(event) {
     setEmail(event.target.value);
@@ -40,6 +41,7 @@ function PasswordResetForm() {
     const error = validateEmail(email);
     setFieldError(error);
     if (error) {
+      emailRef.current.focus();
       return;
     }
 
@@ -76,6 +78,7 @@ function PasswordResetForm() {
           autoComplete="email"
           autoFocus
           fullWidth
+          inputRef={emailRef}
           value={email}
           onChange={handleChange}
           error={Boolean(fieldError)}
