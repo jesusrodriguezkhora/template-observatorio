@@ -1,18 +1,51 @@
-import { useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { AuthContext } from "./AuthContext";
 import { canAccess } from "./permissions";
-import { DEFAULT_ROLE } from "../config/roles";
+import * as authService from "../services/authService";
+
+const LOADING = Object.freeze({ status: "loading", user: null });
+const ANONYMOUS = Object.freeze({ status: "anonymous", user: null });
+
+function toSession(user) {
+  return user ? { status: "authenticated", user } : ANONYMOUS;
+}
 
 function AuthProvider({ children }) {
-  const role = DEFAULT_ROLE;
+  const [session, setSession] = useState(LOADING);
 
-  const value = useMemo(
-    () => ({
+  useEffect(() => {
+    let active = true;
+    authService
+      .getSession()
+      .then((user) => active && setSession(toSession(user)))
+      .catch(() => active && setSession(ANONYMOUS));
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const login = useCallback(async (email, password) => {
+    const user = await authService.login(email, password);
+    setSession(toSession(user));
+    return user;
+  }, []);
+
+  const logout = useCallback(async () => {
+    await authService.logout();
+    setSession(ANONYMOUS);
+  }, []);
+
+  const value = useMemo(() => {
+    const role = session.user?.role ?? null;
+    return {
+      status: session.status,
+      user: session.user,
       role,
+      login,
+      logout,
       canAccess: (allowedRoles) => canAccess(role, allowedRoles),
-    }),
-    [role],
-  );
+    };
+  }, [session, login, logout]);
 
   return <AuthContext value={value}>{children}</AuthContext>;
 }

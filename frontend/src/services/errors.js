@@ -6,3 +6,10 @@ export class NotFoundError extends Error {
     this.id = id;
   }
 }
+
+export class AuthError extends Error {
+  constructor(message = "Correo o contraseña incorrectos") {
+    super(message);
+    this.name = "AuthError";
+  }
+}
