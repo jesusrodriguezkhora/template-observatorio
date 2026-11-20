@@ -1,4 +1,3 @@
-// temas.js
 export const temas = {
   key: "temas",
   displayField: "nombre",
