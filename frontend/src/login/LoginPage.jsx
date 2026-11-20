@@ -1,10 +1,15 @@
-import { Box, Typography } from "@mui/material";
+import { LOGIN_CONFIG } from "../config/login";
+import AuthLayout from "./AuthLayout";
+import LoginForm from "./LoginForm";
 
 function LoginPage() {
   return (
-    <Box sx={{ p: 4 }}>
-      <Typography>Pantalla de inicio de sesión (fase 13.3)</Typography>
-    </Box>
+    <AuthLayout
+      title={LOGIN_CONFIG.login.title}
+      subtitle={LOGIN_CONFIG.login.subtitle}
+    >
+      <LoginForm />
+    </AuthLayout>
   );
 }
 
