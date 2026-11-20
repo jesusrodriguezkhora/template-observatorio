@@ -18,7 +18,9 @@ function LogoutDialog({ open, onCancel, onConfirm }) {
       aria-labelledby="logout-dialog-title"
       aria-describedby="logout-dialog-message"
     >
-      <DialogTitle id="logout-dialog-title">{TEXT.title}</DialogTitle>
+      <DialogTitle id="logout-dialog-title" sx={{ fontWeight: 'bold', fontSize: 30 }}>
+        {TEXT.title}
+      </DialogTitle>
       <DialogContent>
         <DialogContentText id="logout-dialog-message">
           {TEXT.message}
