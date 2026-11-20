@@ -67,7 +67,7 @@ function SidebarUser() {
           "&:hover": { bgcolor: "action.hover" },
         }}
       >
-        <Avatar sx={{ width: 36, height: 36, fontSize: 14 }}>
+        <Avatar sx={{ width: 36, height: 36, bgcolor: 'primary.main', fontSize: 14 }}>
           {name.charAt(0)}
         </Avatar>
         <Box sx={{ flexGrow: 1, minWidth: 0 }}>

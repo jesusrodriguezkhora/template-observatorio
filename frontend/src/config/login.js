@@ -1,7 +1,8 @@
 import { MUNICIPALITY } from "./municipality";
 
 export const LOGIN_CONFIG = Object.freeze({
-  imageSize: 88,
+  imageHeight: 88,
+  imageWidth: 88,
   imageRadius: 2,
   cardWidth: 440,
   backgroundTint: 0.16,

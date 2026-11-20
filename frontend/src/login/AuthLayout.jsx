@@ -43,8 +43,8 @@ function AuthLayout({ title, subtitle, children }) {
               src={MUNICIPALITY.logo}
               alt={MUNICIPALITY.name}
               sx={{
-                width: CONFIG.imageSize,
-                height: CONFIG.imageSize,
+                width: CONFIG.imageWidth,
+                height: CONFIG.imageHeight,
                 objectFit: "cover",
                 borderRadius: CONFIG.imageRadius,
                 mb: 2,
