@@ -1,24 +1,23 @@
 import { IconButton, Tooltip } from "@mui/material";
-import { useColorScheme } from "@mui/material/styles";
 import DarkModeOutlined from "@mui/icons-material/DarkModeOutlined";
 import LightModeOutlined from "@mui/icons-material/LightModeOutlined";
-import { THEME_CONFIG } from "../config/theme";
+import { useColorModeToggle } from "../hooks/useColorModeToggle";
+import { USER_MENU_CONFIG } from "../config/userMenu";
 
 function ColorModeToggle() {
-  const { mode, systemMode, setMode } = useColorScheme();
+  const colorMode = useColorModeToggle();
 
-  if (!THEME_CONFIG.allowDarkMode || !mode) {
+  if (!colorMode) {
     return null;
   }
 
-  const currentMode = mode === "system" ? systemMode : mode;
-  const nextMode = currentMode === "dark" ? "light" : "dark";
-  const label = nextMode === "dark" ? "Activar modo oscuro" : "Activar modo claro";
+  const toDark = colorMode.nextMode === "dark";
+  const label = toDark ? USER_MENU_CONFIG.darkMode : USER_MENU_CONFIG.lightMode;
 
   return (
     <Tooltip title={label}>
-      <IconButton onClick={() => setMode(nextMode)} aria-label={label}>
-        {currentMode === "dark" ? <LightModeOutlined /> : <DarkModeOutlined />}
+      <IconButton onClick={colorMode.toggle} aria-label={label}>
+        {toDark ? <DarkModeOutlined /> : <LightModeOutlined />}
       </IconButton>
     </Tooltip>
   );
