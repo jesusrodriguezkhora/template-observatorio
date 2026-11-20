@@ -1,10 +1,11 @@
-import { Avatar, Box, Typography } from "@mui/material";
+import { Avatar, Box, IconButton, Tooltip, Typography } from "@mui/material";
+import LogoutOutlined from "@mui/icons-material/LogoutOutlined";
 import { useAuth } from "../auth/AuthContext";
 import { ROLE_LABELS } from "../config/roles";
 import ColorModeToggle from "../components/ColorModeToggle";
 
 function SidebarUser() {
-  const { user, role } = useAuth();
+  const { user, role, logout } = useAuth();
   const name = user?.nombre ?? "Sin sesión";
   const roleLabel = role ? (ROLE_LABELS[role] ?? role) : "";
 
@@ -20,6 +21,13 @@ function SidebarUser() {
         </Typography>
       </Box>
       <ColorModeToggle />
+      {user && (
+        <Tooltip title="Cerrar sesión">
+          <IconButton onClick={logout} aria-label="Cerrar sesión">
+            <LogoutOutlined />
+          </IconButton>
+        </Tooltip>
+      )}
     </Box>
   );
 }
