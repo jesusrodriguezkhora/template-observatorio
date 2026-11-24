@@ -9,7 +9,7 @@ from app.config import get_settings
 settings = get_settings()
 
 
-def _ensure_sqlite_folder(url: str) -> None:
+def ensure_sqlite_folder(url: str) -> None:
     database = make_url(url).database
     if database and database != ":memory:":
         Path(database).parent.mkdir(parents=True, exist_ok=True)
@@ -19,7 +19,7 @@ def _create_engine():
     if not settings.is_sqlite:
         return create_engine(settings.database_url)
 
-    _ensure_sqlite_folder(settings.database_url)
+    ensure_sqlite_folder(settings.database_url)
     engine = create_engine(
         settings.database_url,
         connect_args={"check_same_thread": False},
