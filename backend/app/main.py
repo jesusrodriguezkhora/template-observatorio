@@ -6,6 +6,7 @@ from sqlalchemy import text
 from sqlalchemy.orm import Session
 
 from app.api.router import build_router
+from app.auth.router import router as auth_router
 from app.config import get_settings
 from app.db import get_session
 
@@ -28,3 +29,4 @@ def health(session: Annotated[Session, Depends(get_session)]):
     return {"status": "ok", "app": settings.app_name}
 
 app.include_router(build_router(), prefix="/api")
+app.include_router(auth_router, prefix="/api")

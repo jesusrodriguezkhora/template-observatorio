@@ -13,11 +13,18 @@ class Settings(BaseSettings):
     database_url: str = "sqlite:///data/observatorio.db"
     cors_origins: Annotated[list[str], NoDecode] = ["http://localhost:5173"]
 
-    @field_validator("cors_origins", mode="before")
+    roles: Annotated[list[str], NoDecode] = ["administracion", "gestion", "politico"]
+    super_role: str = "administracion"
+
+    session_cookie_name: str = "observatorio_session"
+    session_hours: int = 12
+    cookie_secure: bool = True
+
+    @field_validator("cors_origins", "roles", mode="before")
     @classmethod
-    def split_origins(cls, value):
+    def split_csv(cls, value):
         if isinstance(value, str):
-            return [origin.strip() for origin in value.split(",") if origin.strip()]
+            return [item.strip() for item in value.split(",") if item.strip()]
         return value
 
     @property
