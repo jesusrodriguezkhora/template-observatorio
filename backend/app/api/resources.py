@@ -17,6 +17,7 @@ class Resource:
     filters: dict[str, InstrumentedAttribute] = field(default_factory=dict)
     order_by: tuple[InstrumentedAttribute, ...] = ()
     detail_options: tuple[LoaderOption, ...] = ()
+    roles: tuple[str, ...] = ()
 
 
 RESOURCES: dict[str, Resource] = {

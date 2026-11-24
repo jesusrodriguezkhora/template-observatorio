@@ -1,3 +1,4 @@
+from collections.abc import Sequence
 from typing import Annotated
 
 from fastapi import Depends, HTTPException, Request
@@ -23,3 +24,13 @@ def get_current_user(
 
 
 CurrentUser = Annotated[Usuario, Depends(get_current_user)]
+
+def require_roles(roles: Sequence[str]):
+    def check_role(user: CurrentUser) -> Usuario:
+        if roles and user.rol != get_settings().super_role and user.rol not in roles:
+            raise HTTPException(
+                status_code=403, detail="No tienes permiso para este recurso"
+            )
+        return user
+
+    return check_role
