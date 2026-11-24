@@ -5,6 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import text
 from sqlalchemy.orm import Session
 
+from app.api.router import build_router
 from app.config import get_settings
 from app.db import get_session
 
@@ -25,3 +26,5 @@ app.add_middleware(
 def health(session: Annotated[Session, Depends(get_session)]):
     session.execute(text("SELECT 1"))
     return {"status": "ok", "app": settings.app_name}
+
+app.include_router(build_router(), prefix="/api")
