@@ -4,6 +4,7 @@ import {
   HOME_PATH,
   LOGIN_PATH,
   PASSWORD_RESET_PATH,
+  PASSWORD_RESET_CONFIRM_PATH,
 } from "./config/navigation";
 import { getAllEntities } from "./entities/registry";
 import AppLayout from "./layout/AppLayout";
