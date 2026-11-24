@@ -13,3 +13,11 @@ export class AuthError extends Error {
     this.name = "AuthError";
   }
 }
+
+export class ApiError extends Error {
+  constructor(status, detail) {
+    super(detail || `Error ${status} en la API`);
+    this.name = "ApiError";
+    this.status = status;
+  }
+}
