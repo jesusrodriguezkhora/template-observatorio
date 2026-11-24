@@ -3,6 +3,7 @@ import { ROLES } from "./roles";
 export const HOME_PATH = "/proyectos";
 export const LOGIN_PATH = "/login";
 export const PASSWORD_RESET_PATH = "/recuperar-contrasena";
+export const PASSWORD_RESET_CONFIRM_PATH = "/restablecer-contrasena";
 
 export const NAV_ITEMS = Object.freeze([
   { key: "dashboard", label: "Dashboard", path: "/dashboard", enabled: false },

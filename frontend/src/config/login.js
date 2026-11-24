@@ -7,6 +7,7 @@ export const LOGIN_CONFIG = Object.freeze({
   cardWidth: 440,
   backgroundTint: 0.16,
   footer: MUNICIPALITY.name,
+  passwordMinLength: 10,
   login: {
     title: "¡Hola de nuevo!",
     subtitle: `Inicia sesión en el ${MUNICIPALITY.observatoryTitle.toLowerCase()} para continuar`,
@@ -29,11 +30,27 @@ export const LOGIN_CONFIG = Object.freeze({
       "Si el correo está registrado, recibirás en unos minutos un enlace para restablecer tu contraseña. Revisa también la carpeta de correo no deseado.",
     backToLogin: "Volver a iniciar sesión",
   },
+  confirm: {
+    title: "Crea una contraseña nueva",
+    subtitle: "Elige una contraseña que no uses en otros sitios",
+    passwordLabel: "Contraseña nueva",
+    repeatLabel: "Repite la contraseña",
+    submit: "Guardar contraseña",
+    submitting: "Guardando…",
+    success:
+      "Tu contraseña se ha cambiado. Por seguridad, se han cerrado todas tus sesiones abiertas.",
+    goToLogin: "Iniciar sesión",
+    requestNewLink: "Pedir un enlace nuevo",
+  },
   errors: {
     emailRequired: "Introduce tu correo electrónico",
     emailInvalid: "Introduce un correo electrónico válido",
     passwordRequired: "Introduce tu contraseña",
     unexpected: "No se ha podido iniciar sesión. Inténtalo de nuevo más tarde.",
     resetUnexpected: "No se ha podido enviar la solicitud. Inténtalo de nuevo más tarde.",
+    passwordTooShort: "La contraseña debe tener al menos {min} caracteres",
+    passwordMismatch: "Las contraseñas no coinciden",
+    linkInvalid: "El enlace no es válido o ha caducado. Pide uno nuevo para cambiar tu contraseña.",
+    confirmUnexpected: "No se ha podido cambiar la contraseña. Inténtalo de nuevo más tarde.",
   },
 });
