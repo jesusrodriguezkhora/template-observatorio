@@ -1,5 +1,7 @@
 from pwdlib import PasswordHash
 
+MIN_PASSWORD_LENGTH = 10
+
 _hasher = PasswordHash.recommended()
 
 # Hash de una contraseña cualquiera, para gastar el mismo tiempo cuando el usuario no existe y no revelar qué correos están dados de alta.

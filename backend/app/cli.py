@@ -10,12 +10,10 @@ import sys
 
 from sqlalchemy import func, select
 
-from app.auth.passwords import hash_password
+from app.auth.passwords import MIN_PASSWORD_LENGTH, hash_password
 from app.config import get_settings
 from app.db import SessionLocal
 from app.models import Usuario
-
-MIN_PASSWORD_LENGTH = 12
 
 
 def _ask_password() -> str:

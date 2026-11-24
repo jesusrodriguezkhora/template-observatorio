@@ -1,6 +1,6 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, HTTPException, Request, Response
+from fastapi import APIRouter, Depends, HTTPException, Request, Response, BackgroundTasks
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
@@ -10,7 +10,9 @@ from app.auth.sessions import create_session, delete_session
 from app.config import get_settings
 from app.db import get_session
 from app.models import Usuario
-from app.schemas.auth import LoginIn, SessionOut
+from app.schemas.auth import LoginIn, SessionOut, PasswordResetConfirmIn, PasswordResetIn
+from app.auth.password_reset import confirm_reset, create_reset
+from app.mail import send_mail
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
@@ -59,3 +61,20 @@ def logout(request: Request, response: Response, db: SessionDep) -> None:
 @router.get("/me", response_model=SessionOut)
 def me(user: CurrentUser):
     return {"user": user}
+
+
+@router.post("/password-reset", status_code=202)
+def request_password_reset(
+    data: PasswordResetIn, background: BackgroundTasks, db: SessionDep
+) -> None:
+    message = create_reset(db, data.email)
+    if message is not None:
+        background.add_task(send_mail, message)
+
+
+@router.post("/password-reset/confirm", status_code=204)
+def confirm_password_reset(data: PasswordResetConfirmIn, db: SessionDep) -> None:
+    if not confirm_reset(db, data.token, data.password):
+        raise HTTPException(
+            status_code=400, detail="El enlace no es válido o ha caducado"
+        )
