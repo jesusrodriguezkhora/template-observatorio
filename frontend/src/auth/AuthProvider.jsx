@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { AuthContext } from "./AuthContext";
 import { canAccess } from "./permissions";
 import * as authService from "../services/authService";
+import { onSessionExpired } from "../services/sessionEvents";
 
 const LOADING = Object.freeze({ status: "loading", user: null });
 const ANONYMOUS = Object.freeze({ status: "anonymous", user: null });
@@ -24,6 +25,7 @@ function AuthProvider({ children }) {
     };
   }, []);
 
+  useEffect(() => onSessionExpired(() => setSession(ANONYMOUS)), []);
   const login = useCallback(async (email, password) => {
     const user = await authService.login(email, password);
     setSession(toSession(user));

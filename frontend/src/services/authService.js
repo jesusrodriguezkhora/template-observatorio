@@ -1,4 +1,8 @@
-import * as adapter from "./mockAuthAdapter";
+import { API_URL } from "../config/api";
+import * as httpAuthAdapter from "./httpAuthAdapter";
+import * as mockAuthAdapter from "./mockAuthAdapter";
+
+const adapter = API_URL ? httpAuthAdapter : mockAuthAdapter;
 
 export function login(email, password) {
   return adapter.login(email, password);
