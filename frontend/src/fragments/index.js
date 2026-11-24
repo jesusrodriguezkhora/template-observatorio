@@ -63,7 +63,6 @@ export const FRAGMENT_TYPES = Object.freeze({
   list: {
     Fragment: ListFragment,
     requires: ["field"],
-    requiresOneOf: ["entity", "catalog"],
     valueDefs: (fragment) =>
       fragment.field && getRefSourceKey(fragment)
         ? [toListValueDef(fragment)]

@@ -23,8 +23,24 @@ function getBadge(fragment, row, index) {
   return fragment.badge ? row?.[fragment.badge] : null;
 }
 
+function getInlineItems(fragment, record) {
+  const rows = Array.isArray(record[fragment.field])
+    ? record[fragment.field]
+    : [];
+  return rows.map((row, index) => ({
+    id: String(row?.id ?? index),
+    badge: getBadge(fragment, row, index),
+    text: row?.[fragment.text] ?? "",
+    background: null,
+    color: null,
+  }));
+}
+
 export function getListItems(fragment, record, lookups) {
   const sourceKey = getRefSourceKey(fragment);
+  if (!sourceKey) {
+    return getInlineItems(fragment, record);
+  }
   const source = lookups[sourceKey];
   const ids = [...new Set(toIdList(record[fragment.field]).map(String))];
 
@@ -47,6 +63,11 @@ export function isListEmpty(fragment, record) {
 
 export function validateList(fragment) {
   const errors = validateRefTarget(fragment);
+  if (!getRefSourceKey(fragment) && fragment.text === undefined) {
+    errors.push(
+      'sin "entity" ni "catalog", la lista necesita "text" (campo de cada elemento)',
+    );
+  }
   for (const option of ["badge", "text"]) {
     if (
       fragment[option] !== undefined &&

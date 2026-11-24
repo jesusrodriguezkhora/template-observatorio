@@ -50,7 +50,8 @@ export function getLookupRow(lookups, sourceKey, value) {
 export function getRefLabel(value, column, lookups) {
   const sourceKey = getRefSourceKey(column);
   const row = getLookupRow(lookups, sourceKey, value);
-  return row ? row[lookups[sourceKey].displayField] : value;
+  const displayField = column.displayField ?? lookups[sourceKey]?.displayField;
+  return row ? row[displayField] : value;
 }
 
 export function getRefTarget(value, column, lookups) {
@@ -65,7 +66,15 @@ export function getRefTarget(value, column, lookups) {
 }
 
 export function validateRefTarget(column) {
-  return column.entity !== undefined && column.catalog !== undefined
-    ? ['usa "entity" o "catalog", no los dos']
-    : [];
+  const errors = [];
+  if (column.entity !== undefined && column.catalog !== undefined) {
+    errors.push('usa "entity" o "catalog", no los dos');
+  }
+  if (
+    column.displayField !== undefined &&
+    typeof column.displayField !== "string"
+  ) {
+    errors.push('"displayField" debe ser el nombre de un campo');
+  }
+  return errors;
 }

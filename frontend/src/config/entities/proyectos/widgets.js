@@ -15,7 +15,7 @@ export const widgets = {
     title: "Responsable y coordinación",
     fragments: [
       { type: "info", subtitle: "Área coordinadora", field: "area", valueType: "ref", catalog: "areas" },
-      { type: "info", subtitle: "Responsable del proyecto", field: "responsable" },
+      { type: "info", subtitle: "Responsable del área", field: "area", valueType: "ref", catalog: "areas", displayField: "responsable" },
     ],
   },
   informacion: {
@@ -23,7 +23,7 @@ export const widgets = {
     fragments: [
       { type: "info", subtitle: "Programa / plan", field: "programa" },
       { type: "info", subtitle: "Descripción", field: "descripcion" },
-      { type: "list", subtitle: "Objetivos", field: "objetivos", catalog: "objetivos", badge: "id", hideIfEmpty: true },
+      { type: "list", subtitle: "Objetivos", field: "objetivos", badge: "id", text: "descripcion", hideIfEmpty: true },
       { type: "info", subtitle: "Temas", field: "temas", valueType: "chips", catalog: "temas" },
       { type: "info", subtitle: "Subtemas", field: "subtemas", valueType: "chips", catalog: "subtemas", hideIfEmpty: true },
     ],
