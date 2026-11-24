@@ -80,6 +80,31 @@ class Proyecto(ControlColumns, Base):
         passive_deletes=True,
     )
 
+    hitos: Mapped[list["HitoProyecto"]] = relationship(
+        back_populates="proyecto",
+        order_by="HitoProyecto.orden",
+        cascade="all, delete-orphan",
+        passive_deletes=True,
+    )
+
+class HitoProyecto(ControlColumns, Base):
+    __tablename__ = "hitos_proyecto"
+    __table_args__ = (
+        max_length("descripcion", 500),
+        iso_date("fecha"),
+        CheckConstraint("orden >= 1", name="orden_positive"),
+    )
+
+    proyecto_id: Mapped[str] = mapped_column(
+        "proyecto",
+        ForeignKey("proyectos.id", ondelete="CASCADE"),
+        primary_key=True,
+    )
+    orden: Mapped[int] = mapped_column(primary_key=True)
+    fecha: Mapped[date]
+    descripcion: Mapped[str]
+
+    proyecto: Mapped[Proyecto] = relationship(back_populates="hitos")
 
 class ObjetivoProyecto(ControlColumns, Base):
     __tablename__ = "objetivos_proyecto"
