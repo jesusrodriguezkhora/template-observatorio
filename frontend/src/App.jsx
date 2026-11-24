@@ -13,6 +13,7 @@ import LoginPage from "./login/LoginPage";
 import PasswordResetPage from "./login/PasswordResetPage";
 import EntityBrowser from "./components/entity/EntityBrowser";
 import EntityDetail from "./components/entity/EntityDetail";
+import PasswordResetConfirmPage from "./login/PasswordResetConfirmPage";
 
 const allEntities = getAllEntities();
 const browsableEntities = allEntities.filter((entity) => entity.browser);
@@ -25,6 +26,7 @@ function App() {
         <Route element={<GuestOnly />}>
           <Route path={LOGIN_PATH} element={<LoginPage />} />
           <Route path={PASSWORD_RESET_PATH} element={<PasswordResetPage />} />
+          <Route path={PASSWORD_RESET_CONFIRM_PATH} element={<PasswordResetConfirmPage />} />
         </Route>
         <Route element={<RequireAuth />}>
           <Route element={<AppLayout />}>

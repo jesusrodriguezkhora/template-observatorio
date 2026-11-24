@@ -1,5 +1,5 @@
 import { apiRequest } from "./apiClient";
-import { ApiError, AuthError } from "./errors";
+import { ApiError, AuthError, ResetLinkError } from "./errors";
 
 function isUnauthorized(error) {
   return error instanceof ApiError && error.status === 401;
@@ -35,4 +35,17 @@ export async function getSession() {
 
 export async function requestPasswordReset(email) {
   await apiRequest("auth/password-reset", { method: "POST", body: { email } });
+}
+
+export async function confirmPasswordReset(token, password) {
+  try {
+    await apiRequest("auth/password-reset/confirm", {
+      method: "POST",
+      body: { token, password },
+    });
+  } catch (error) {
+    throw error instanceof ApiError && error.status === 400
+      ? new ResetLinkError()
+      : error;
+  }
 }

@@ -21,3 +21,10 @@ export class ApiError extends Error {
     this.status = status;
   }
 }
+
+export class ResetLinkError extends Error {
+  constructor(message = "El enlace no es válido o ha caducado") {
+    super(message);
+    this.name = "ResetLinkError";
+  }
+}

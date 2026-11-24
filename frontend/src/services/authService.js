@@ -19,3 +19,7 @@ export function getSession() {
 export function requestPasswordReset(email) {
   return adapter.requestPasswordReset(email);
 }
+
+export function confirmPasswordReset(token, password) {
+  return adapter.confirmPasswordReset(token, password);
+}

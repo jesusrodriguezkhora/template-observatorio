@@ -1,5 +1,5 @@
 import { MOCK_USERS } from "../mocks/users";
-import { AuthError } from "./errors";
+import { AuthError, ResetLinkError } from "./errors";
 
 const MOCK_DELAY_MS = 300;
 const SESSION_KEY = "observatorio.mockSession";
@@ -47,4 +47,11 @@ export async function getSession() {
 
 export async function requestPasswordReset(_email) {
   return respond(null);
+}
+
+export async function confirmPasswordReset(token, _password) {
+  await respond(null);
+  if (token === "caducado") {
+    throw new ResetLinkError();
+  }
 }
