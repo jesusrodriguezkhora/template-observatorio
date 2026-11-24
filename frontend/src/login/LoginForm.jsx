@@ -1,18 +1,11 @@
 import { useRef, useState } from "react";
 import { Link as RouterLink } from "react-router";
-import {
-  Alert,
-  Box,
-  Button,
-  InputAdornment,
-  Link,
-  Stack,
-  TextField,
-} from "@mui/material";
+import { Alert, Box, Button, Link, Stack, TextField } from "@mui/material";
 import { useAuth } from "../auth/AuthContext";
 import { AuthError } from "../services/errors";
 import { LOGIN_CONFIG } from "../config/login";
 import { PASSWORD_RESET_PATH } from "../config/navigation";
+import PasswordField from "./PasswordField";
 import { validateEmail, validatePassword } from "./validation";
 
 const TEXT = LOGIN_CONFIG.login;
@@ -21,7 +14,6 @@ function LoginForm() {
   const { login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
   const [fieldErrors, setFieldErrors] = useState({});
   const [formError, setFormError] = useState(null);
   const [submitting, setSubmitting] = useState(false);
@@ -84,33 +76,14 @@ function LoginForm() {
           disabled={submitting}
           slotProps={{ htmlInput: { inputMode: "email" } }}
         />
-        <TextField
+        <PasswordField
           label={TEXT.passwordLabel}
-          type={showPassword ? "text" : "password"}
           autoComplete="current-password"
-          fullWidth
           inputRef={passwordRef}
           value={password}
           onChange={handleChange(setPassword, "password")}
-          error={Boolean(fieldErrors.password)}
-          helperText={fieldErrors.password}
+          error={fieldErrors.password}
           disabled={submitting}
-          slotProps={{
-            input: {
-              endAdornment: (
-                <InputAdornment position="end">
-                  <Button
-                    size="small"
-                    onClick={() => setShowPassword((value) => !value)}
-                    aria-pressed={showPassword}
-                    disabled={submitting}
-                  >
-                    {showPassword ? TEXT.hidePassword : TEXT.showPassword}
-                  </Button>
-                </InputAdornment>
-              ),
-            },
-          }}
         />
         {formError && (
           <Alert severity="error" role="alert">
